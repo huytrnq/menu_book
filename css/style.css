@@ -491,17 +491,19 @@ a.btn-cta, a.btn-reserve-outline { text-decoration: none; }
   .mbook .page-body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
   /* posters are wider-ratio than a phone screen: show the whole page, no crop */
   .mbook .break-img { height: 100%; object-fit: contain; }
-  /* fill the letterbox with a blurred, zoomed copy of the same image */
+  /* fill the letterbox with a blurred, zoomed copy of the same image.
+     Promote to its own layer so the blur is rasterized once and the flip
+     just composites it (no per-frame re-blur). */
   .mbook .break-bg {
     display: block;
     position: absolute; inset: -8%; z-index: 0;
     background-size: cover; background-position: center;
-    transform: scale(1.08);
-    filter: blur(22px) brightness(0.55) saturate(1.1);
+    transform: translateZ(0) scale(1.08);
+    filter: blur(16px) brightness(0.55) saturate(1.1);
   }
   .mbook .hero { height: 150px; }
-  /* snappier flip reads smoother on a phone */
-  .mleaf.animated { transition-duration: 600ms; }
+  /* snappier, more natural page-turn timing on a phone */
+  .mleaf.animated { transition: transform 480ms cubic-bezier(0.33, 0, 0.2, 1); }
 }
 
 @media (max-width: 520px) {

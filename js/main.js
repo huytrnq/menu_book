@@ -501,7 +501,6 @@
       card.style.transform = flipped ? 'rotateY(-180deg)' : 'rotateY(0deg)';
       card.style.zIndex = z;
       card.style.visibility = live ? 'visible' : 'hidden';
-      card.style.willChange = live ? 'transform' : 'auto';
       card.classList.add('animated');
     });
   }
