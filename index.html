@@ -48,7 +48,7 @@
       </div>
 
       <button id="open-menu" class="btn-cta cover-btn" type="button" data-i18n="openMenu">Abrir la carta&nbsp;→</button>
-      <div class="cover-phone" data-i18n="reservasPhone">Reservas · 931 090 041</div>
+      <a class="cover-phone" href="tel:+34931090041" data-i18n="reservasPhone">Reservas · 931 090 041</a>
     </div>
 
     <div class="promos">
@@ -88,7 +88,7 @@
       <nav id="nav" class="nav" aria-label="Categorías de la carta"><!-- nav buttons injected by JS --></nav>
       <div class="topbar-right">
         <div class="header-lang"></div>
-        <button class="btn-reserve-outline open-res" type="button" data-i18n="reserve">Reservar</button>
+        <a class="btn-reserve-outline" href="tel:+34931090041" role="button" data-i18n="reserve">Reservar</a>
       </div>
     </header>
 
@@ -110,15 +110,19 @@
       <span id="spread-total" class="bookbar-total"></span>
     </footer>
 
-    <button class="btn-cta sticky-res open-res" type="button" data-i18n="reserveTable">Reservar mesa</button>
+    <a class="btn-cta sticky-res" href="tel:+34931090041" role="button" data-i18n="reserveTable">Reservar mesa</a>
   </section>
 
-  <!-- ===================== RESERVATION MODAL ===================== -->
+  <!-- ===================== RESERVATION MODAL =====================
+       Disabled for now: all "Reservar" controls dial the phone (tel:) instead.
+       To re-enable online booking, uncomment this block AND the modal logic in
+       js/main.js (buildResModal call + the .open-res/.close-res click handler),
+       then turn the reserve buttons back into <button class="... open-res">.
+
   <div id="res-modal" class="modal" hidden>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="res-heading">
       <button class="modal-close close-res" type="button" aria-label="Cerrar">✕</button>
 
-      <!-- Step 1: form -->
       <div id="res-form-step">
         <div class="modal-head">
           <div class="eyebrow gold" data-i18n="resEyebrow">Reservas · Viet Kitchen</div>
@@ -129,19 +133,19 @@
           <input id="res-date" name="date" type="date" required>
 
           <label data-i18n="hora">Hora</label>
-          <div id="time-chips" class="time-chips"><!-- chips injected by JS --></div>
+          <div id="time-chips" class="time-chips"></div>
 
           <label data-i18n="comensales">Comensales</label>
           <div class="party">
-            <button id="party-dec" class="party-btn" type="button" aria-label="−">−</button>
+            <button id="party-dec" class="party-btn" type="button" aria-label="menos">−</button>
             <span id="party-count" class="party-count">2</span>
-            <button id="party-inc" class="party-btn" type="button" aria-label="+">+</button>
+            <button id="party-inc" class="party-btn" type="button" aria-label="mas">+</button>
             <span class="party-label" data-i18n="personas">personas</span>
           </div>
 
           <input id="res-name" name="name" type="text" data-i18n-ph="phName" placeholder="Nombre" required>
           <div class="field-row">
-            <input id="res-phone" name="phone" type="tel" data-i18n-ph="phPhone" placeholder="Teléfono">
+            <input id="res-phone" name="phone" type="tel" data-i18n-ph="phPhone" placeholder="Telefono">
             <input id="res-email" name="email" type="email" data-i18n-ph="phEmail" placeholder="Email">
           </div>
           <textarea id="res-notes" name="notes" rows="2" data-i18n-ph="phNotes" placeholder="Peticiones especiales"></textarea>
@@ -151,12 +155,11 @@
         </form>
       </div>
 
-      <!-- Step 2: confirmation -->
       <div id="res-done-step" class="modal-done" hidden>
-        <div class="done-check"><span>✓</span></div>
+        <div class="done-check"><span>OK</span></div>
         <div class="eyebrow terra" data-i18n="doneEyebrow">Reserva recibida</div>
         <h3 class="done-title"><span id="done-thanks">Gracias</span>, <span id="done-name"></span></h3>
-        <p class="done-text" data-i18n="doneText">Te esperamos en Viet Kitchen. Te enviaremos la confirmación por mensaje.</p>
+        <p class="done-text" data-i18n="doneText">Te esperamos en Viet Kitchen.</p>
         <div class="done-summary">
           <div><span data-i18n="fecha">Fecha</span><strong id="done-date"></strong></div>
           <div><span data-i18n="hora">Hora</span><strong id="done-time"></strong></div>
@@ -166,6 +169,7 @@
       </div>
     </div>
   </div>
+  ===================== /RESERVATION MODAL ===================== -->
 
   <script src="js/main.js"></script>
 </body>

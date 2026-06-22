@@ -348,7 +348,7 @@
         '<h2>' + esc(tx(pg.title)) + '</h2>' + rows +
         '<div class="hours-addr">Carrer d\'Aribau, Eixample<br>08011 Barcelona</div>' +
         '<div class="hours-contact">' + esc(tx(I18N.reservasLabel)) + ' · 931 090 041<br>hola@vietkitchen.es · @vietkitchenbcn</div>' +
-        '<button class="btn-cta about-res-btn open-res" type="button">' + esc(tx(I18N.reserveTableArrow)) + '</button>' +
+        '<a class="btn-cta about-res-btn" href="tel:+34931090041">' + esc(tx(I18N.reserveTableArrow)) + '</a>' +
       '</div>';
     }
     /* list */
@@ -533,7 +533,8 @@
       var key = el.getAttribute('data-i18n-ph');
       if (I18N[key] != null) el.setAttribute('placeholder', tx(I18N[key]));
     });
-    $('#done-thanks').textContent = tx(I18N.doneThanks);
+    var dt = $('#done-thanks');
+    if (dt) dt.textContent = tx(I18N.doneThanks);
     /* The about-page reserve button text is rebuilt with the book. */
     $$('.lang-switch button').forEach(function (b) {
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
@@ -562,7 +563,10 @@
   }
 
   /* ----------------------------------------------------------
-     Reservation modal.
+     Reservation modal — DISABLED for now.
+     The "Reservar" controls are plain tel: links (see index.html), so the
+     functions below are not wired up. Re-enable by uncommenting the modal
+     markup in index.html and the buildResModal()/click-handler lines in init().
      ---------------------------------------------------------- */
   var TIMES = ['13:30', '14:30', '20:00', '21:00', '22:00'];
   var res = { date: '', time: '', party: 2, name: '' };
@@ -634,7 +638,7 @@
     applyStatic();
     buildNav();
     buildBook();
-    buildResModal();
+    /* buildResModal();  // reservation modal disabled — reserve buttons dial the phone */
 
     $('#open-menu').addEventListener('click', showBook);
     $('#to-cover').addEventListener('click', showCover);
@@ -646,15 +650,17 @@
       if (btn) navGo(btn.getAttribute('data-cat'));
     });
 
-    /* Any "open/close reservations" button (header, sticky, in-page) */
+    /* Reservation modal disabled — reserve controls are tel: links.
     document.addEventListener('click', function (e) {
       if (e.target.closest('.open-res')) openRes();
       if (e.target.closest('.close-res')) closeRes();
     });
+    */
 
-    /* Keyboard: arrows turn pages, Esc closes the modal */
+    /* Keyboard: arrows turn pages, Esc closes the modal (if present) */
     document.addEventListener('keydown', function (e) {
-      if (!$('#res-modal').hidden) {
+      var modal = $('#res-modal');
+      if (modal && !modal.hidden) {
         if (e.key === 'Escape') closeRes();
         return;
       }
