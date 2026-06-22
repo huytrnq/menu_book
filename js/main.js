@@ -477,22 +477,28 @@
      (StPageFlip's 'stretch' sizing reads the parent box). */
   function buildMobileFlip() {
     if (pageFlip) { try { pageFlip.destroy(); } catch (e) {} pageFlip = null; }
+    /* StPageFlip takes over (and on destroy removes) the element it's given, so
+       hand it a fresh disposable child and keep #mbook as the stable container. */
+    mbookEl.innerHTML = '';
+    var inner = document.createElement('div');
+    inner.className = 'flipbook';
     var html = '';
     for (var i = 0; i < pages.length; i++) {
       html += '<div class="page" data-page="' + i + '">' + faceInnerHTML(pages[i]) + '</div>';
     }
-    mbookEl.innerHTML = html;
+    inner.innerHTML = html;
+    mbookEl.appendChild(inner);
     var startAt = Math.min(mpage, pages.length - 1);
     requestAnimationFrame(function () {
-      if (mode !== 'm') return;            // bailed out of mobile before the frame
-      var pf = new window.St.PageFlip(mbookEl, {
+      if (mode !== 'm' || !mbookEl.contains(inner)) return;   // bailed out before the frame
+      var pf = new window.St.PageFlip(inner, {
         width: PW, height: PH, size: 'stretch',
         minWidth: 280, maxWidth: 1400, minHeight: 360, maxHeight: 1800,
         maxShadowOpacity: 0.5, drawShadow: true, flippingTime: 850,
         usePortrait: true, showCover: false, mobileScrollSupport: false,
         swipeDistance: 30, useMouseEvents: true
       });
-      pf.loadFromHTML(mbookEl.querySelectorAll('.page'));
+      pf.loadFromHTML(inner.querySelectorAll('.page'));
       pf.on('flip', function (e) { mpage = e.data; updateChrome(); });
       pf.turnToPage(startAt);
       pageFlip = pf;

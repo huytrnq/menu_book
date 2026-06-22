@@ -471,6 +471,7 @@ a.btn-cta, a.btn-reserve-outline { text-decoration: none; }
 /* One page per screen, flipped around the left edge. Hidden on desktop. */
 .mbook { display: none; position: absolute; inset: 0; }
 /* StPageFlip pages: the cream page fills each flip leaf */
+.mbook .flipbook { width: 100%; }
 .mbook .page { background: #0E2F2A; overflow: hidden; }
 .mbook .page .leaf-face-inner { height: 100%; }
 .mleaf { position: absolute; inset: 0; transform-origin: left center; transform-style: preserve-3d; }
@@ -489,6 +490,8 @@ a.btn-cta, a.btn-reserve-outline { text-decoration: none; }
   .stage { display: block; overflow: hidden; padding: 0; }
   .scale-wrap { display: none; }   /* hide the desktop two-page spread */
   .mbook { display: block; }
+  /* center the StPageFlip book vertically in the stage (id beats its classes) */
+  #mbook { position: absolute; left: 0; right: 0; top: 50%; bottom: auto; transform: translateY(-50%); }
   /* a single page fills the screen; let dense pages scroll inside the card */
   .mbook .leaf-face-inner { height: 100%; }
   .mbook .page-body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
