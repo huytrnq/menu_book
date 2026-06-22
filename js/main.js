@@ -489,13 +489,18 @@
     else { mbookEl.innerHTML = ''; buildBook(); }
   }
 
-  /* Flip the mobile stack to the current page (one page visible at a time). */
+  /* Flip the mobile stack to the current page (one page visible at a time).
+     Only the current page, its neighbours and any page mid-flip are painted
+     and GPU-promoted; the rest are hidden so the 3D flip stays smooth. */
   function applyMobileFlip() {
     mleafEls.forEach(function (card, k) {
       var flipped = k < mpage;
       var z = (k === mActive) ? 9000 : (flipped ? 1000 + k : 8000 - k);
+      var live = (k === mpage || k === mActive || Math.abs(k - mpage) <= 1);
       card.style.transform = flipped ? 'rotateY(-180deg)' : 'rotateY(0deg)';
       card.style.zIndex = z;
+      card.style.visibility = live ? 'visible' : 'hidden';
+      card.style.willChange = live ? 'transform' : 'auto';
       card.classList.add('animated');
     });
   }

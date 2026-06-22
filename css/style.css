@@ -469,7 +469,7 @@ a.btn-cta, a.btn-reserve-outline { text-decoration: none; }
 /* ===================== MOBILE FLIP (single page) ===================== */
 /* One page per screen, flipped around the left edge. Hidden on desktop. */
 .mbook { display: none; position: absolute; inset: 0; perspective: 1700px; perspective-origin: 50% 50%; }
-.mleaf { position: absolute; inset: 0; transform-origin: left center; transform-style: preserve-3d; will-change: transform; }
+.mleaf { position: absolute; inset: 0; transform-origin: left center; transform-style: preserve-3d; }
 .mleaf.animated { transition: transform var(--flip-dur) var(--flip-ease); }
 .mleaf-face {
   position: absolute; inset: 0;
@@ -488,8 +488,11 @@ a.btn-cta, a.btn-reserve-outline { text-decoration: none; }
   /* a single page fills the screen; let dense pages scroll inside the card */
   .mbook .leaf-face-inner { height: 100%; }
   .mbook .page-body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
-  .mbook .break-img { height: 100%; }
+  /* posters are wider-ratio than a phone screen: show the whole page, no crop */
+  .mbook .break-img { height: 100%; object-fit: contain; }
   .mbook .hero { height: 150px; }
+  /* snappier flip reads smoother on a phone */
+  .mleaf.animated { transition-duration: 600ms; }
 }
 
 @media (max-width: 520px) {
