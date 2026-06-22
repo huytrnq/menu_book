@@ -1,7 +1,7 @@
 # Viet Kitchen — menu site
 
-Static menu site for Viet Kitchen (Barcelona). A flip-book menu on desktop, a single
-column scroll on tablet/mobile, plus a reservation form. Trilingual (Spanish default,
+Static menu site for Viet Kitchen (Barcelona). A 3D flip-book: a two-page spread on
+desktop, one page per screen with swipe/tap flip on phone and tablet. Trilingual (Spanish default,
 English, Vietnamese) with a switcher in the cover and header; the choice is saved in
 the browser. Plain HTML, CSS and JavaScript, no framework, no build step.
 

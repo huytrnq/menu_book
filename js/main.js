@@ -402,25 +402,31 @@
   /* ----------------------------------------------------------
      State + element references.
      ---------------------------------------------------------- */
-  var pages, leafCount, anchorSpread;
-  var spread = 0;          // current open spread (0 .. leafCount-1)
-  var activeLeaf = -1;     // leaf currently mid-flip (for z-index)
-  var leafEls = [];        // built leaf DOM nodes
+  var pages, leafCount, anchorSpread, anchorPage;
+  var spread = 0;          // desktop: current open spread (0 .. leafCount-1)
+  var activeLeaf = -1;     // desktop: leaf mid-flip (z-index)
+  var leafEls = [];        // desktop leaf DOM nodes
+  var mpage = 0;           // mobile: current page (0 .. pages.length-1)
+  var mActive = -1;        // mobile: page mid-flip (z-index)
+  var mleafEls = [];       // mobile page-card DOM nodes
+  var mode = '';           // 'd' = desktop spread, 'm' = mobile single-page flip
 
   var $ = function (sel) { return document.querySelector(sel); };
   var $$ = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
-  var bookEl, stageEl, scaleEl;
+  var bookEl, mbookEl, stageEl, scaleEl;
 
   function isMobile() { return window.innerWidth < MOBILE_BP; }
 
-  /* Recompute pages + anchor map (called on language change). */
+  /* Recompute pages + anchor maps (called on language change). */
   function rebuildData() {
     pages = buildPages();
     leafCount = Math.ceil(pages.length / 2);
     anchorSpread = {};
+    anchorPage = {};
     pages.forEach(function (pg, i) {
       if (!pg.anchor) return;
       anchorSpread[pg.anchor] = (i % 2 === 0) ? (i / 2) : ((i + 1) / 2);
+      anchorPage[pg.anchor] = i;
     });
   }
 
@@ -462,6 +468,38 @@
     });
   }
 
+  /* Build the mobile single-page flip cards (one card per page). */
+  function buildMobile() {
+    var html = '';
+    for (var i = 0; i < pages.length; i++) {
+      html += '<div class="mleaf" data-page="' + i + '">' +
+        '<div class="mleaf-face front">' + faceInnerHTML(pages[i]) + '</div>' +
+        '<div class="mleaf-face back"></div>' +
+      '</div>';
+    }
+    mbookEl.innerHTML = html;
+    mleafEls = Array.prototype.slice.call(mbookEl.querySelectorAll('.mleaf'));
+  }
+
+  /* Build whichever layout the viewport needs; clear the other so anchor ids
+     are unique and offscreen DOM is not kept around. */
+  function buildActive() {
+    mode = isMobile() ? 'm' : 'd';
+    if (mode === 'm') { bookEl.innerHTML = ''; buildMobile(); }
+    else { mbookEl.innerHTML = ''; buildBook(); }
+  }
+
+  /* Flip the mobile stack to the current page (one page visible at a time). */
+  function applyMobileFlip() {
+    mleafEls.forEach(function (card, k) {
+      var flipped = k < mpage;
+      var z = (k === mActive) ? 9000 : (flipped ? 1000 + k : 8000 - k);
+      card.style.transform = flipped ? 'rotateY(-180deg)' : 'rotateY(0deg)';
+      card.style.zIndex = z;
+      card.classList.add('animated');
+    });
+  }
+
   /* Position/flip every leaf for the current spread (desktop). */
   function applyFlip() {
     leafEls.forEach(function (leaf, k) {
@@ -485,24 +523,39 @@
     scaleEl.style.transform = 'scale(' + s.toFixed(3) + ')';
   }
 
-  /* Footer label for a spread: the title of whichever page on it has one. */
+  /* Footer label for a desktop spread: the title of whichever page has one. */
   function spreadLabel(i) {
     var fp = pages[2 * i], bp = pages[2 * i + 1];
     if (fp && fp.type === 'title') return tx(I18N.titleEyebrow);
     return tx((fp && fp.title) || (bp && bp.title) || '');
   }
+  /* Footer label for a single mobile page. */
+  function pageLabel(i) {
+    var pg = pages[i];
+    if (!pg) return '';
+    if (pg.type === 'title') return tx(I18N.titleEyebrow);
+    return tx(pg.title || pg.cat || '');
+  }
 
   function updateChrome() {
-    $('#spread-num').textContent = String(spread + 1).padStart(2, '0');
-    $('#spread-label').textContent = spreadLabel(spread);
-    $('#spread-total').textContent = '/ ' + String(leafCount).padStart(2, '0');
-    $('#prev').disabled = spread <= 0;
-    $('#next').disabled = spread >= leafCount - 1;
+    if (mode === 'm') {
+      $('#spread-num').textContent = String(mpage + 1).padStart(2, '0');
+      $('#spread-label').textContent = pageLabel(mpage);
+      $('#spread-total').textContent = '/ ' + String(pages.length).padStart(2, '0');
+      $('#prev').disabled = mpage <= 0;
+      $('#next').disabled = mpage >= pages.length - 1;
+    } else {
+      $('#spread-num').textContent = String(spread + 1).padStart(2, '0');
+      $('#spread-label').textContent = spreadLabel(spread);
+      $('#spread-total').textContent = '/ ' + String(leafCount).padStart(2, '0');
+      $('#prev').disabled = spread <= 0;
+      $('#next').disabled = spread >= leafCount - 1;
+    }
   }
 
   function render() {
-    applyFlip();
-    applyScale();
+    if (mode === 'm') applyMobileFlip();
+    else { applyFlip(); applyScale(); }
     updateChrome();
   }
 
@@ -510,24 +563,20 @@
      Page turning + navigation.
      ---------------------------------------------------------- */
   function goNext() {
-    if (spread < leafCount - 1) { activeLeaf = spread; spread++; render(); }
+    if (mode === 'm') {
+      if (mpage < pages.length - 1) { mActive = mpage; mpage++; render(); }
+    } else if (spread < leafCount - 1) { activeLeaf = spread; spread++; render(); }
   }
   function goPrev() {
-    if (spread > 0) { activeLeaf = spread - 1; spread--; render(); }
+    if (mode === 'm') {
+      if (mpage > 0) { mActive = mpage - 1; mpage--; render(); }
+    } else if (spread > 0) { activeLeaf = spread - 1; spread--; render(); }
   }
   function navGo(cat) {
-    if (isMobile()) {
-      var el = document.getElementById(cat);
-      if (el && stageEl) {
-        /* Position relative to the scroll container (offsetParent is unreliable
-           here because the leaves are positioned). */
-        var top = el.getBoundingClientRect().top - stageEl.getBoundingClientRect().top + stageEl.scrollTop;
-        stageEl.scrollTop = Math.max(0, top - 12);
-      }
+    if (mode === 'm') {
+      if (anchorPage[cat] != null) { mActive = -1; mpage = anchorPage[cat]; render(); }
     } else if (anchorSpread[cat] != null) {
-      activeLeaf = -1;
-      spread = anchorSpread[cat];
-      render();
+      activeLeaf = -1; spread = anchorSpread[cat]; render();
     }
   }
 
@@ -544,7 +593,8 @@
   function showBook() {
     $('#cover').hidden = true;
     $('#book').hidden = false;
-    spread = 0; activeLeaf = -1;
+    spread = 0; activeLeaf = -1; mpage = 0; mActive = -1;
+    buildActive();
     render();
   }
   function showCover() {
@@ -581,7 +631,10 @@
     rebuildData();
     applyStatic();
     buildNav();
-    buildBook();
+    /* keep the reader's place across the language rebuild */
+    if (mode === 'm') mpage = Math.min(mpage, pages.length - 1);
+    else spread = Math.min(spread, leafCount - 1);
+    buildActive();
     render();
   }
 
@@ -663,6 +716,7 @@
      ---------------------------------------------------------- */
   function init() {
     bookEl = $('#book-el');
+    mbookEl = $('#mbook');
     stageEl = $('#vk-scroll');
     scaleEl = $('.scale-wrap');
 
@@ -670,7 +724,7 @@
     rebuildData();
     applyStatic();
     buildNav();
-    buildBook();
+    buildActive();
     /* buildResModal();  // reservation modal disabled — reserve buttons dial the phone */
 
     $('#open-menu').addEventListener('click', showBook);
@@ -702,7 +756,32 @@
       if (e.key === 'ArrowLeft') goPrev();
     });
 
-    window.addEventListener('resize', function () { applyScale(); });
+    /* On resize, rebuild when crossing the mobile breakpoint (keeping place). */
+    window.addEventListener('resize', function () {
+      if ($('#book').hidden) return;
+      var want = isMobile() ? 'm' : 'd';
+      if (want !== mode) {
+        if (want === 'm') { mpage = Math.min(spread * 2, pages.length - 1); mActive = -1; }
+        else { spread = Math.floor(mpage / 2); activeLeaf = -1; }
+        buildActive();
+      }
+      render();
+    });
+
+    /* Touch swipe to flip on mobile (horizontal swipes only). */
+    var sx = 0, sy = 0, swiping = false;
+    mbookEl.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) { swiping = false; return; }
+      swiping = true; sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+    }, { passive: true });
+    mbookEl.addEventListener('touchend', function (e) {
+      if (!swiping) return;
+      swiping = false;
+      var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+        if (dx < 0) goNext(); else goPrev();
+      }
+    }, { passive: true });
 
     render();
   }

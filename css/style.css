@@ -466,42 +466,30 @@ a.btn-cta, a.btn-reserve-outline { text-decoration: none; }
 #vk-scroll::-webkit-scrollbar { width: 8px; }
 #vk-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 8px; }
 
-/* ===================== RESPONSIVE: tablet / mobile ===================== */
-/* Below 820px the 3D flip-book becomes a single-column vertical scroll. */
-@media (max-width: 819px) {
-  .stage {
-    display: block;
-    overflow-y: auto; overflow-x: hidden;
-    padding: 16px 12px 96px;
-  }
-  .scale-wrap { width: 100%; transform: none !important; }
-  .stage-inner { perspective: none; }
-  .book { position: static !important; width: 100% !important; height: auto !important; max-width: 540px; margin: 0 auto; transform: none; }
-  .book-shadow, .static-left, .arrows, .bookbar { display: none; }
+/* ===================== MOBILE FLIP (single page) ===================== */
+/* One page per screen, flipped around the left edge. Hidden on desktop. */
+.mbook { display: none; position: absolute; inset: 0; perspective: 1700px; perspective-origin: 50% 50%; }
+.mleaf { position: absolute; inset: 0; transform-origin: left center; transform-style: preserve-3d; will-change: transform; }
+.mleaf.animated { transition: transform var(--flip-dur) var(--flip-ease); }
+.mleaf-face {
+  position: absolute; inset: 0;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  box-shadow: 0 12px 30px -16px rgba(0,0,0,0.6);
+}
+.mleaf-face.back { transform: rotateY(180deg); background: linear-gradient(150deg, #F7EEDA 0%, #EADCC0 100%); }
 
-  /* Stack each leaf and show both faces flat, in reading order */
-  .leaf {
-    position: relative !important;
-    width: 100% !important;
-    height: auto !important;
-    transform: none !important;
-    transition: none !important;
-    transform-style: flat;
-    left: auto !important; top: auto !important;
-  }
-  .leaf-face {
-    position: relative !important;
-    inset: auto !important;
-    width: 100% !important;
-    transform: none !important;
-    backface-visibility: visible;
-    -webkit-backface-visibility: visible;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
-  }
-  .leaf-face-inner { height: auto; }
-  .break-img { height: auto; }   /* natural aspect ratio in the mobile scroll */
-  .page-body { overflow: visible; min-height: 0; }
-  .hero { height: 150px; }
+/* ===================== RESPONSIVE: tablet / mobile ===================== */
+/* Below 820px: one page per screen with a 3D flip (see .mbook). */
+@media (max-width: 819px) {
+  .stage { display: block; overflow: hidden; padding: 0; }
+  .scale-wrap { display: none; }   /* hide the desktop two-page spread */
+  .mbook { display: block; }
+  /* a single page fills the screen; let dense pages scroll inside the card */
+  .mbook .leaf-face-inner { height: 100%; }
+  .mbook .page-body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .mbook .break-img { height: 100%; }
+  .mbook .hero { height: 150px; }
 }
 
 @media (max-width: 520px) {
