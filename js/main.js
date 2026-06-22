@@ -389,6 +389,7 @@
     if (pg.type === 'break') {
       var bid = pg.anchor ? ' id="' + pg.anchor + '"' : '';
       return '<div class="leaf-face-inner break"' + bid + '>' +
+        '<div class="break-bg" style="background-image:url(\'' + pg.img + '\')"></div>' +
         '<img class="break-img" src="' + pg.img + '" alt="" loading="lazy"></div>';
     }
     var hero = pg.hero
