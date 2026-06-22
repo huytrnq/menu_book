@@ -97,6 +97,7 @@
      ---------------------------------------------------------- */
   function buildPages() {
     var P = [];
+    var CAT = '';   /* current umbrella category (Entrantes, Platos principales, ...) */
 
     function list(o) {
       var items = (o.items || []);
@@ -108,6 +109,7 @@
         var useHero = first && !anyImg && !!o.img;
         P.push({
           type: 'list',
+          cat: o.cat != null ? o.cat : CAT,   /* category badge — shown on every page of the section */
           hero: useHero ? { img: o.img, pos: o.imgPos || 'center', h: '150px' } : null,
           anchor: first ? (o.anchor || '') : '',
           eyebrow: first ? (o.eyebrow || '') : '',
@@ -143,6 +145,7 @@
       ] });
 
     /* ===== SIDE DISH / Entrantes ===== */
+    CAT = T('Entrantes', 'Starters', 'Khai vị');
     list({ anchor: 'entrantes', eyebrow: T('Para empezar', 'To start', 'Khai vị'), title: T('Rollitos', 'Rolls', 'Cuốn & Chiên'), items: [
       { name: T('Rollitos fritos de Hanói', 'Hanoi Fried Rolls', 'Nem Rán Hà Nội'), p: '8,50 €', img: IMG + 't-roll-fried.png', desc: T('Cerdo, judía mungo, champiñón, fideos de cristal', 'Pork, mung beans, mushroom, glass noodles', 'Thịt heo, giá đỗ, nấm, miến') },
       { name: T('Rollitos crujientes', 'Crispy Spring Rolls', 'Chả Giò'), p: '8,50 €', img: IMG + 't-roll-fried2.png', desc: T('Cerdo · judía mungo (vegano)', 'Pork · mung beans (vegan)', 'Thịt heo · giá đỗ (chay)') },
@@ -165,6 +168,7 @@
     ]});
 
     /* ===== MAIN DISH / Platos principales ===== */
+    CAT = T('Platos principales', 'Main dishes', 'Món chính');
     list({ anchor: 'pho', img: IMG + 'hero-pho.png', eyebrow: T('Sopa de fideos', 'Noodle soup', 'Phở'), title: T('Phở', 'Phở', 'Phở'), items: [
       { name: 'What The Phở', p: '39,00 €', desc: T('Phở especial · para compartir', 'Special phở · for sharing', 'Phở đặc biệt · để chia sẻ') },
       { name: T('Phở de ternera', 'Beef Phở', 'Phở Bò'), p: '16,90 €', desc: T('Albóndiga de ternera casera +1,80 €', 'Homemade beef ball +1,80 €', 'Bò viên nhà làm +1,80 €') },
@@ -222,6 +226,7 @@
     ]});
 
     /* ===== DESSERT / Postres ===== */
+    CAT = T('Postres', 'Desserts', 'Tráng miệng');
     list({ anchor: 'postres', img: IMG + 'hero-desserts.png', eyebrow: T('Dulces', 'Sweets', 'Món ngọt'), title: T('Postres', 'Desserts', 'Tráng Miệng'), items: [
       { name: T('Helado de pandan', 'Pandan Ice Cream', 'Kem Lá Dứa'), p: '5,90 €', desc: T('Especialidad de Viet Kitchen', "Viet Kitchen's special", 'Đặc biệt của Viet Kitchen') },
       { name: T('Panna cotta tropical', 'Tropical Panna Cotta', 'Panna Cotta Nhiệt Đới'), p: '4,90 €' },
@@ -232,6 +237,7 @@
     ]});
 
     /* ===== DRINKS / Bebidas ===== */
+    CAT = T('Bebidas', 'Drinks', 'Đồ uống');
     list({ anchor: 'bebidas', img: IMG + 'hero-drinks.png', eyebrow: T('Caseras', 'Homemade', 'Tự pha'), title: T('Bebidas de la Casa', 'House Drinks', 'Pha Chế'), items: [
       { name: T('Té helado de citronela', 'Lemongrass Iced Tea', 'Trà Đá Sả'), p: '5,90 €' },
       { name: T('Limonada de piña y menta', 'Mint Pineapple Lemonade', 'Nước Chanh Dứa Bạc Hà'), p: '5,90 €' },
@@ -273,6 +279,7 @@
     ]});
 
     /* ===== SET MENU / Menús ===== */
+    CAT = T('Menús', 'Set menus', 'Thực đơn');
     list({ anchor: 'menus', img: IMG + 'hero-tasting.png', eyebrow: T('Mín. 2 personas · por persona', 'Min. 2 people · per person', 'Tối thiểu 2 người · mỗi người'), title: T('Menús Degustación', 'Tasting Menus', 'Thực Đơn Nếm Thử'), items: [
       { name: T('Menú Degustación', 'Tasting Menu', 'Thực Đơn Nếm Thử'), p: '22,90 €', desc: T('Rollito frito · rollito fresco · ensalada de pollo · curry de pollo · phở de ternera', 'Fried roll · fresh roll · chicken salad · chicken curry · beef phở', 'Chả giò · gỏi cuốn · gỏi gà · cà ri gà · phở bò') },
       { name: T('Menú Degustación Vegano', 'Vegan Tasting Menu', 'Thực Đơn Nếm Thử Chay'), p: '22,90 €', t: ['VG'], desc: T('Rollito frito · rollito fresco · ensalada de tofu · curry vegano · phở vegano', 'Fried roll · fresh roll · tofu salad · veg curry · veg phở', 'Chả giò · gỏi cuốn · gỏi đậu hũ · cà ri chay · phở chay') },
@@ -352,9 +359,10 @@
       '</div>';
     }
     /* list */
-    var head = (pg.eyebrow || pg.title)
-      ? '<div class="sec-eyebrow">' + esc(tx(pg.eyebrow)) + '</div>' +
-        '<div class="sec-head"><h2>' + esc(tx(pg.title)) + '</h2></div>'
+    var cat = pg.cat ? '<div class="sec-cat">' + esc(tx(pg.cat)) + '</div>' : '';
+    var eyebrow = pg.eyebrow ? '<div class="sec-eyebrow">' + esc(tx(pg.eyebrow)) + '</div>' : '';
+    var head = (pg.cat || pg.eyebrow || pg.title)
+      ? cat + eyebrow + '<div class="sec-head"><h2>' + esc(tx(pg.title)) + '</h2></div>'
       : '';
     var items = pg.items.map(itemHTML).join('');
     var note = pg.note ? '<p class="page-note">' + esc(tx(pg.note)) + '</p>' : '';
