@@ -284,6 +284,10 @@ a.btn-cta, a.btn-reserve-outline { text-decoration: none; }
   display: flex; flex-direction: column; overflow: hidden;
 }
 .hero { flex: none; }
+
+/* Full-bleed highlight / break pages */
+.leaf-face-inner.break { padding: 0; background: #0E2F2A; }
+.break-img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .page-body { flex: 1; min-height: 0; overflow: hidden; padding: 34px 40px; display: flex; flex-direction: column; }
 
 /* Page content types */
@@ -495,6 +499,7 @@ a.btn-cta, a.btn-reserve-outline { text-decoration: none; }
     box-shadow: 0 1px 0 rgba(0,0,0,0.08);
   }
   .leaf-face-inner { height: auto; }
+  .break-img { height: auto; }   /* natural aspect ratio in the mobile scroll */
   .page-body { overflow: visible; min-height: 0; }
   .hero { height: 150px; }
 }

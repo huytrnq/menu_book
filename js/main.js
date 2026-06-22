@@ -129,6 +129,11 @@
       P.push({ type: 'hours', anchor: o.anchor || '', eyebrow: o.eyebrow || '',
         title: o.title || '', hours: o.hours || [] });
     }
+    /* Full-bleed highlight / section-break page (one of the designed images). */
+    function brk(o) {
+      P.push({ type: 'break', img: IMG + 'break/' + o.img + '.jpg',
+        anchor: o.anchor || '', title: o.title || '' });
+    }
 
     title();
     story({ anchor: 'welcome', img: IMG + 'flatlay-pho.jpg',
@@ -144,22 +149,27 @@
         T('In Vietnamese food we trust.', 'In Vietnamese food we trust.', 'In Vietnamese food we trust.')
       ] });
 
+    brk({ img: 'taste', title: T('Sabor vietnamita', 'Vietnamese taste', 'Hương vị Việt') });
+
     /* ===== SIDE DISH / Entrantes ===== */
     CAT = T('Entrantes', 'Starters', 'Khai vị');
-    list({ anchor: 'entrantes', eyebrow: T('Para empezar', 'To start', 'Khai vị'), title: T('Rollitos', 'Rolls', 'Cuốn & Chiên'), items: [
+    brk({ img: 'freshrolls', anchor: 'entrantes', title: T('Rollitos', 'Rolls', 'Cuốn') });
+    list({ eyebrow: T('Para empezar', 'To start', 'Khai vị'), title: T('Rollitos', 'Rolls', 'Cuốn & Chiên'), items: [
       { name: T('Rollitos fritos de Hanói', 'Hanoi Fried Rolls', 'Nem Rán Hà Nội'), p: '8,50 €', img: IMG + 't-roll-fried.png', desc: T('Cerdo, judía mungo, champiñón, fideos de cristal', 'Pork, mung beans, mushroom, glass noodles', 'Thịt heo, giá đỗ, nấm, miến') },
       { name: T('Rollitos crujientes', 'Crispy Spring Rolls', 'Chả Giò'), p: '8,50 €', img: IMG + 't-roll-fried2.png', desc: T('Cerdo · judía mungo (vegano)', 'Pork · mung beans (vegan)', 'Thịt heo · giá đỗ (chay)') },
       { name: T('Rollitos frescos', 'Fresh Rolls', 'Gỏi Cuốn'), p: '7,90 €', t: ['GF'], img: IMG + 't-roll-fresh.png', desc: T('Cerdo & gamba · mango & gamba · tofu (vegano) · tofu & mango (vegano)', 'Pork & shrimp · mango & shrimp · tofu (vegan) · tofu & mango (vegan)', 'Thịt heo & tôm · xoài & tôm · đậu hũ (chay) · đậu hũ & xoài (chay)') },
       { name: T('Ensalada de papaya verde', 'Green Papaya Salad', 'Gỏi Đu Đủ'), p: '9,50 €', desc: T('Cerdo & gamba · mango & gamba · pollo · tofu (vegano)', 'Pork & shrimp · mango & shrimp · chicken · tofu (vegan)', 'Thịt heo & tôm · xoài & tôm · gà · đậu hũ (chay)') }
     ]});
-    list({ img: IMG + 'hero-salads.png', eyebrow: T('Para compartir', 'To share', 'Món ăn kèm'), title: T('Para picar', 'To share', 'Món Ăn Kèm'), items: [
+    brk({ img: 'sides', title: T('Para compartir', 'To share', 'Món ăn kèm') });
+    list({ eyebrow: T('Para compartir', 'To share', 'Món ăn kèm'), title: T('Para picar', 'To share', 'Món Ăn Kèm'), items: [
       { name: T('Crackers de gamba', 'Shrimp Puff', 'Phồng Tôm'), p: '4,50 €', desc: T('Crackers de gamba fritos', 'Deep-fried shrimp crackers', 'Bánh phồng tôm chiên') },
       { name: T('Rollitos agrios fritos', 'Fried Sour Rolls', 'Nem Chua Rán'), p: '8,50 €', desc: T('Cerdo fermentado, pan rallado', 'Fermented pork, breadcrumbs', 'Nem chua, vụn bánh mì') },
       { name: T('Pastel de pescado y arroz verde', 'Fish Cake & Green Rice', 'Chả Cá Cốm'), p: '8,50 €', desc: T('Pasta de pescado, copos de arroz glutinoso verde', 'Fish paste, green sticky rice flakes', 'Chả cá, cốm') },
       { name: T('Verduras salteadas', 'Stir-fried Vegetables', 'Rau Xào'), p: '7,90 €', t: ['V'], desc: T('Verduras de temporada, salsa de ostras', 'Seasonal vegetables, oyster sauce', 'Rau theo mùa, sốt hào') },
       { name: T('Arroz crujiente', 'Crispy Rice', 'Cơm Cháy'), p: '8,50 €', desc: T('Arroz seco, chà bông, aceite de cebolleta', 'Dried rice, pork floss, scallion oil', 'Cơm cháy, chà bông, mỡ hành') }
     ]});
-    list({ anchor: 'grill', eyebrow: T('A la brasa', 'Grilled', 'Đồ nướng'), title: T('Grill', 'Grill', 'Món Nướng'), items: [
+    brk({ img: 'grill', anchor: 'grill', title: T('Grill', 'Grill', 'Món Nướng') });
+    list({ eyebrow: T('A la brasa', 'Grilled', 'Đồ nướng'), title: T('Grill', 'Grill', 'Món Nướng'), items: [
       { name: T('Brochetas a la brasa', 'Grilled Meat Skewers', 'Thịt Xiên Nướng'), p: '9,50 €', img: IMG + 't-grill-skewers.png', desc: T('Cerdo, citronela, ajo, miel, sésamo', 'Pork, lemongrass, garlic, honey, sesame', 'Thịt heo, sả, tỏi, mật ong, mè') },
       { name: T('Ternera a la brasa', 'Grilled Beef', 'Thịt Bò Nướng'), p: '9,50 €', img: IMG + 't-grill-combo.png', desc: T('Ternera, salsa de ostras, ajo, pimienta negra, citronela', 'Beef, oyster sauce, garlic, black pepper, lemongrass', 'Thịt bò, sốt hào, tỏi, tiêu đen, sả') },
       { name: T('Pollo a la brasa', 'Grilled Chicken', 'Thịt Gà Nướng'), p: '9,50 €', img: IMG + 't-grill-flame.png', desc: T('Pollo, miel, ajo, soja, cinco especias', 'Chicken, honey, garlic, soy, five-spice', 'Thịt gà, mật ong, tỏi, xì dầu, ngũ vị') },
@@ -169,14 +179,16 @@
 
     /* ===== MAIN DISH / Platos principales ===== */
     CAT = T('Platos principales', 'Main dishes', 'Món chính');
-    list({ anchor: 'pho', img: IMG + 'hero-pho.png', eyebrow: T('Sopa de fideos', 'Noodle soup', 'Phở'), title: T('Phở', 'Phở', 'Phở'), items: [
+    brk({ img: 'whatthepho', anchor: 'pho', title: 'What The Phở' });
+    list({ eyebrow: T('Sopa de fideos', 'Noodle soup', 'Phở'), title: T('Phở', 'Phở', 'Phở'), items: [
       { name: 'What The Phở', p: '39,00 €', desc: T('Phở especial · para compartir', 'Special phở · for sharing', 'Phở đặc biệt · để chia sẻ') },
       { name: T('Phở de ternera', 'Beef Phở', 'Phở Bò'), p: '16,90 €', desc: T('Albóndiga de ternera casera +1,80 €', 'Homemade beef ball +1,80 €', 'Bò viên nhà làm +1,80 €') },
       { name: T('Phở de pollo', 'Chicken Phở', 'Phở Gà'), p: '14,90 €' },
       { name: T('Phở Heura (vegano)', 'Heura Phở (vegan)', 'Phở Heura'), p: '14,90 €', t: ['VG'] },
       { name: T('Phở vegano', 'Vegan Phở', 'Phở Chay'), p: '14,90 €', t: ['VG'], desc: T('Tofu y champiñones', 'Tofu & mushroom', 'Đậu hũ & nấm') }
     ]});
-    list({ img: IMG + 'hero-bun.png', eyebrow: T('Bol de fideos', 'Noodle bowl', 'Bún'), title: T('Bún', 'Bún', 'Bún'), items: [
+    brk({ img: 'buncha', title: T('Bún', 'Bún', 'Bún') });
+    list({ eyebrow: T('Bol de fideos', 'Noodle bowl', 'Bún'), title: T('Bún', 'Bún', 'Bún'), items: [
       { name: T('Bún Chả de Hanói', 'Hanoi Bún Chả', 'Bún Chả Hà Nội'), p: '16,90 €', desc: T('Cerdo a la brasa, fideos, hierbas, salsa para mojar', 'Grilled pork, vermicelli, herbs, dipping sauce', 'Thịt nướng, bún, rau thơm, nước chấm') },
       { name: T('Bún Bò Huế', 'Bún Bò Huế', 'Bún Bò Huế'), p: '16,90 €', t: ['✦'], desc: T('Ternera, salchicha de cerdo casera, citronela, caldo picante', 'Beef, homemade pork sausage, lemongrass, spicy broth', 'Thịt bò, chả heo nhà làm, sả, nước dùng cay') }
     ]});
@@ -187,7 +199,8 @@
       { name: T('Bánh Xèo de ternera', 'Beef Bánh Xèo', 'Bánh Xèo Bò'), p: '16,90 €' },
       { name: T('Bánh Xèo vegano', 'Vegan Bánh Xèo', 'Bánh Xèo Chay'), p: '16,90 €', t: ['VG'], desc: T('Tofu y champiñones', 'Tofu & mushroom', 'Đậu hũ & nấm') }
     ]});
-    list({ anchor: 'salteados', img: IMG + 'hero-wok.png', eyebrow: T('Salteado al wok', 'Stir-fried', 'Xào'), title: T('Fideos al wok', 'Wok Noodles', 'Phở Xào'), items: [
+    brk({ img: 'phoxao', anchor: 'salteados', title: T('Fideos al wok', 'Wok Noodles', 'Phở Xào') });
+    list({ eyebrow: T('Salteado al wok', 'Stir-fried', 'Xào'), title: T('Fideos al wok', 'Wok Noodles', 'Phở Xào'), items: [
       { name: T('Phở salteado con ternera', 'Beef Wok Noodles', 'Phở Xào Bò'), p: '14,90 €', desc: T('Fideos salteados, ajo, cebolla, soja, ostras, cacahuete', 'Stir-fried noodles, garlic, onion, soy, oyster sauce, peanut', 'Phở xào, tỏi, hành, xì dầu, sốt hào, đậu phộng') },
       { name: T('Phở salteado con gambas', 'Shrimp Wok Noodles', 'Phở Xào Tôm'), p: '14,50 €' },
       { name: T('Phở salteado con pollo', 'Chicken Wok Noodles', 'Phở Xào Gà'), p: '14,50 €' },
@@ -227,7 +240,8 @@
 
     /* ===== DESSERT / Postres ===== */
     CAT = T('Postres', 'Desserts', 'Tráng miệng');
-    list({ anchor: 'postres', img: IMG + 'hero-desserts.png', eyebrow: T('Dulces', 'Sweets', 'Món ngọt'), title: T('Postres', 'Desserts', 'Tráng Miệng'), items: [
+    brk({ img: 'dessert', anchor: 'postres', title: T('Postres', 'Desserts', 'Tráng Miệng') });
+    list({ eyebrow: T('Dulces', 'Sweets', 'Món ngọt'), title: T('Postres', 'Desserts', 'Tráng Miệng'), items: [
       { name: T('Helado de pandan', 'Pandan Ice Cream', 'Kem Lá Dứa'), p: '5,90 €', desc: T('Especialidad de Viet Kitchen', "Viet Kitchen's special", 'Đặc biệt của Viet Kitchen') },
       { name: T('Panna cotta tropical', 'Tropical Panna Cotta', 'Panna Cotta Nhiệt Đới'), p: '4,90 €' },
       { name: T('Yogur con arroz negro', 'Yogurt & Black Rice', 'Sữa Chua Nếp Cẩm'), p: '5,90 €' },
@@ -238,7 +252,8 @@
 
     /* ===== DRINKS / Bebidas ===== */
     CAT = T('Bebidas', 'Drinks', 'Đồ uống');
-    list({ anchor: 'bebidas', img: IMG + 'hero-drinks.png', eyebrow: T('Caseras', 'Homemade', 'Tự pha'), title: T('Bebidas de la Casa', 'House Drinks', 'Pha Chế'), items: [
+    brk({ img: 'drink', anchor: 'bebidas', title: T('Bebidas de la Casa', 'House Drinks', 'Pha Chế') });
+    list({ eyebrow: T('Caseras', 'Homemade', 'Tự pha'), title: T('Bebidas de la Casa', 'House Drinks', 'Pha Chế'), items: [
       { name: T('Té helado de citronela', 'Lemongrass Iced Tea', 'Trà Đá Sả'), p: '5,90 €' },
       { name: T('Limonada de piña y menta', 'Mint Pineapple Lemonade', 'Nước Chanh Dứa Bạc Hà'), p: '5,90 €' },
       { name: T('Limonada con jengibre', 'Ginger Lemonade', 'Nước Chanh Gừng'), p: '5,90 €' },
@@ -371,6 +386,11 @@
 
   function faceInnerHTML(pg) {
     if (!pg) return '<div class="leaf-face-inner"></div>';
+    if (pg.type === 'break') {
+      var bid = pg.anchor ? ' id="' + pg.anchor + '"' : '';
+      return '<div class="leaf-face-inner break"' + bid + '>' +
+        '<img class="break-img" src="' + pg.img + '" alt="" loading="lazy"></div>';
+    }
     var hero = pg.hero
       ? '<div class="hero" style="background:url(\'' + pg.hero.img + '\') ' + pg.hero.pos + '/cover no-repeat;height:' + pg.hero.h + '"></div>'
       : '';
@@ -498,7 +518,12 @@
   function navGo(cat) {
     if (isMobile()) {
       var el = document.getElementById(cat);
-      if (el && stageEl) stageEl.scrollTop = Math.max(0, el.offsetTop - 12);
+      if (el && stageEl) {
+        /* Position relative to the scroll container (offsetParent is unreliable
+           here because the leaves are positioned). */
+        var top = el.getBoundingClientRect().top - stageEl.getBoundingClientRect().top + stageEl.scrollTop;
+        stageEl.scrollTop = Math.max(0, top - 12);
+      }
     } else if (anchorSpread[cat] != null) {
       activeLeaf = -1;
       spread = anchorSpread[cat];

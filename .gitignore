@@ -1,3 +1,6 @@
 _original/
 .claude/
 .gstack/
+# Large source images for the break pages — only the optimized
+# assets/images/break/*.jpg are committed and used by the site.
+assets/breakpages/
