@@ -24,6 +24,7 @@ Then open `http://localhost:8000`.
 index.html          markup (cover, book shell, reservation modal)
 css/style.css        all styling + responsive rules
 js/main.js           menu data, page builder, flip-book + interactions
+js/lib/              StPageFlip (vendored, MIT) — real page-curl on phone
 assets/images/       photos, logo, thumbnails
 _original/           the original .dc.html export and source files (kept for reference)
 ```

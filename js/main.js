@@ -408,8 +408,9 @@
   var activeLeaf = -1;     // desktop: leaf mid-flip (z-index)
   var leafEls = [];        // desktop leaf DOM nodes
   var mpage = 0;           // mobile: current page (0 .. pages.length-1)
-  var mActive = -1;        // mobile: page mid-flip (z-index)
-  var mleafEls = [];       // mobile page-card DOM nodes
+  var mActive = -1;        // mobile: page mid-flip (CSS fallback z-index)
+  var mleafEls = [];       // mobile page-card DOM nodes (CSS fallback)
+  var pageFlip = null;     // StPageFlip instance (real page curl on phone)
   var mode = '';           // 'd' = desktop spread, 'm' = mobile single-page flip
 
   var $ = function (sel) { return document.querySelector(sel); };
@@ -469,8 +470,38 @@
     });
   }
 
-  /* Build the mobile single-page flip cards (one card per page). */
-  function buildMobile() {
+  function hasPageFlip() { return !!(window.St && window.St.PageFlip); }
+
+  /* Mobile: real page-curl flip via StPageFlip (one page per screen).
+     Init is deferred to the next frame so the container has a measured size
+     (StPageFlip's 'stretch' sizing reads the parent box). */
+  function buildMobileFlip() {
+    if (pageFlip) { try { pageFlip.destroy(); } catch (e) {} pageFlip = null; }
+    var html = '';
+    for (var i = 0; i < pages.length; i++) {
+      html += '<div class="page" data-page="' + i + '">' + faceInnerHTML(pages[i]) + '</div>';
+    }
+    mbookEl.innerHTML = html;
+    var startAt = Math.min(mpage, pages.length - 1);
+    requestAnimationFrame(function () {
+      if (mode !== 'm') return;            // bailed out of mobile before the frame
+      var pf = new window.St.PageFlip(mbookEl, {
+        width: PW, height: PH, size: 'stretch',
+        minWidth: 280, maxWidth: 1400, minHeight: 360, maxHeight: 1800,
+        maxShadowOpacity: 0.5, drawShadow: true, flippingTime: 850,
+        usePortrait: true, showCover: false, mobileScrollSupport: false,
+        swipeDistance: 30, useMouseEvents: true
+      });
+      pf.loadFromHTML(mbookEl.querySelectorAll('.page'));
+      pf.on('flip', function (e) { mpage = e.data; updateChrome(); });
+      pf.turnToPage(startAt);
+      pageFlip = pf;
+      updateChrome();
+    });
+  }
+
+  /* Fallback: CSS rotateY stack (used only if the library failed to load). */
+  function buildMobileCSS() {
     var html = '';
     for (var i = 0; i < pages.length; i++) {
       html += '<div class="mleaf" data-page="' + i + '">' +
@@ -482,12 +513,20 @@
     mleafEls = Array.prototype.slice.call(mbookEl.querySelectorAll('.mleaf'));
   }
 
+  function buildMobile() {
+    if (hasPageFlip()) buildMobileFlip();
+    else buildMobileCSS();
+  }
+
   /* Build whichever layout the viewport needs; clear the other so anchor ids
      are unique and offscreen DOM is not kept around. */
   function buildActive() {
     mode = isMobile() ? 'm' : 'd';
     if (mode === 'm') { bookEl.innerHTML = ''; buildMobile(); }
-    else { mbookEl.innerHTML = ''; buildBook(); }
+    else {
+      if (pageFlip) { try { pageFlip.destroy(); } catch (e) {} pageFlip = null; }
+      mbookEl.innerHTML = ''; buildBook();
+    }
   }
 
   /* Flip the mobile stack to the current page (one page visible at a time).
@@ -559,7 +598,7 @@
   }
 
   function render() {
-    if (mode === 'm') applyMobileFlip();
+    if (mode === 'm') { if (!pageFlip) applyMobileFlip(); }
     else { applyFlip(); applyScale(); }
     updateChrome();
   }
@@ -569,17 +608,21 @@
      ---------------------------------------------------------- */
   function goNext() {
     if (mode === 'm') {
+      if (pageFlip) { pageFlip.flipNext(); return; }
       if (mpage < pages.length - 1) { mActive = mpage; mpage++; render(); }
     } else if (spread < leafCount - 1) { activeLeaf = spread; spread++; render(); }
   }
   function goPrev() {
     if (mode === 'm') {
+      if (pageFlip) { pageFlip.flipPrev(); return; }
       if (mpage > 0) { mActive = mpage - 1; mpage--; render(); }
     } else if (spread > 0) { activeLeaf = spread - 1; spread--; render(); }
   }
   function navGo(cat) {
     if (mode === 'm') {
-      if (anchorPage[cat] != null) { mActive = -1; mpage = anchorPage[cat]; render(); }
+      if (anchorPage[cat] == null) return;
+      if (pageFlip) { pageFlip.turnToPage(anchorPage[cat]); mpage = anchorPage[cat]; updateChrome(); return; }
+      mActive = -1; mpage = anchorPage[cat]; render();
     } else if (anchorSpread[cat] != null) {
       activeLeaf = -1; spread = anchorSpread[cat]; render();
     }
@@ -636,11 +679,13 @@
     rebuildData();
     applyStatic();
     buildNav();
-    /* keep the reader's place across the language rebuild */
-    if (mode === 'm') mpage = Math.min(mpage, pages.length - 1);
-    else spread = Math.min(spread, leafCount - 1);
-    buildActive();
-    render();
+    /* Only rebuild the book if it's open (StPageFlip needs a visible container). */
+    if (!$('#book').hidden) {
+      if (mode === 'm') mpage = Math.min(mpage, pages.length - 1);
+      else spread = Math.min(spread, leafCount - 1);
+      buildActive();
+      render();
+    }
   }
 
   function mountSwitchers() {
@@ -729,7 +774,8 @@
     rebuildData();
     applyStatic();
     buildNav();
-    buildActive();
+    /* The book is built lazily in showBook(), once #book is visible and has a
+       measured size — StPageFlip can't initialize inside a hidden container. */
     /* buildResModal();  // reservation modal disabled — reserve buttons dial the phone */
 
     $('#open-menu').addEventListener('click', showBook);
@@ -773,22 +819,20 @@
       render();
     });
 
-    /* Touch swipe to flip on mobile (horizontal swipes only). */
+    /* Touch swipe to flip — only for the CSS fallback; StPageFlip has its own drag. */
     var sx = 0, sy = 0, swiping = false;
     mbookEl.addEventListener('touchstart', function (e) {
-      if (e.touches.length !== 1) { swiping = false; return; }
+      if (pageFlip || e.touches.length !== 1) { swiping = false; return; }
       swiping = true; sx = e.touches[0].clientX; sy = e.touches[0].clientY;
     }, { passive: true });
     mbookEl.addEventListener('touchend', function (e) {
-      if (!swiping) return;
+      if (!swiping || pageFlip) return;
       swiping = false;
       var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
       if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
         if (dx < 0) goNext(); else goPrev();
       }
     }, { passive: true });
-
-    render();
   }
 
   if (document.readyState === 'loading') {

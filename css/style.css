@@ -469,7 +469,10 @@ a.btn-cta, a.btn-reserve-outline { text-decoration: none; }
 
 /* ===================== MOBILE FLIP (single page) ===================== */
 /* One page per screen, flipped around the left edge. Hidden on desktop. */
-.mbook { display: none; position: absolute; inset: 0; perspective: 1700px; perspective-origin: 50% 50%; }
+.mbook { display: none; position: absolute; inset: 0; }
+/* StPageFlip pages: the cream page fills each flip leaf */
+.mbook .page { background: #0E2F2A; overflow: hidden; }
+.mbook .page .leaf-face-inner { height: 100%; }
 .mleaf { position: absolute; inset: 0; transform-origin: left center; transform-style: preserve-3d; }
 .mleaf.animated { transition: transform var(--flip-dur) var(--flip-ease); }
 .mleaf-face {
