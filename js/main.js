@@ -32,7 +32,7 @@
   var I18N = {
     tagline: T('Hogar del Phở secreto', 'Home of the secret Phở', 'Ngôi nhà của Phở bí truyền'),
     openMenu: T('Abrir la carta →', 'Open the menu →', 'Mở thực đơn →'),
-    reservasPhone: T('Reservas · 931 090 041', 'Reservations · 931 090 041', 'Đặt bàn · 931 090 041'),
+    reservasPhone: T('Reservas · 935 272 677', 'Reservations · 935 272 677', 'Đặt bàn · 935 272 677'),
     promos: T('Promociones', 'Specials', 'Khuyến mãi'),
     oferta: T('Oferta', 'Deal', 'Ưu đãi'),
     promoLunchKicker: T('Lun – Vie · mediodía', 'Mon – Fri · lunch', 'Th2 – Th6 · trưa'),
@@ -347,8 +347,8 @@
       return '<div class="hours"><div class="sec-eyebrow">' + esc(tx(pg.eyebrow)) + '</div>' +
         '<h2>' + esc(tx(pg.title)) + '</h2>' + rows +
         '<div class="hours-addr">Carrer d\'Aribau, Eixample<br>08011 Barcelona</div>' +
-        '<div class="hours-contact">' + esc(tx(I18N.reservasLabel)) + ' · 931 090 041<br>hola@vietkitchen.es · @vietkitchenbcn</div>' +
-        '<a class="btn-cta about-res-btn" href="tel:+34931090041">' + esc(tx(I18N.reserveTableArrow)) + '</a>' +
+        '<div class="hours-contact">' + esc(tx(I18N.reservasLabel)) + ' · 935 272 677<br>hola@vietkitchen.es · @vietkitchenbcn</div>' +
+        '<a class="btn-cta about-res-btn" href="tel:+34935272677">' + esc(tx(I18N.reserveTableArrow)) + '</a>' +
       '</div>';
     }
     /* list */
