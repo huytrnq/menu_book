@@ -16,22 +16,17 @@
 
   /* --- Top navigation: label -> section anchor --- */
   var NAV = [
-    { id: 'rolls',    label: 'Entrantes' },
-    { id: 'grill',    label: 'Grill' },
-    { id: 'pho',      label: 'Phở' },
-    { id: 'wok',      label: 'Salteados' },
-    { id: 'curry',    label: 'Curry' },
-    { id: 'rice',     label: 'Arroz' },
-    { id: 'tasting',  label: 'Menús' },
-    { id: 'desserts', label: 'Postres' },
-    { id: 'drinks',   label: 'Bebidas' },
-    { id: 'about',    label: 'La Casa' }
+    { id: 'entrantes', label: 'Entrantes' },
+    { id: 'grill',     label: 'Grill' },
+    { id: 'pho',       label: 'Phở' },
+    { id: 'salteados', label: 'Salteados' },
+    { id: 'curry',     label: 'Curry' },
+    { id: 'arroz',     label: 'Arroz' },
+    { id: 'menus',     label: 'Menús' },
+    { id: 'postres',   label: 'Postres' },
+    { id: 'bebidas',   label: 'Bebidas' },
+    { id: 'about',     label: 'La Casa' }
   ];
-
-  /* Footer labels per spread (best-effort; extra spreads show blank). */
-  var SPREAD_LABELS = ['Carta', 'Bienvenida', 'Entrantes', 'Grill & Phở',
-    'Bún & Bánh Xèo', 'Salteados', 'Tamarindo & Arroz', 'Arroz & Menús',
-    'Postres & Bebidas', 'Té & Cervezas', 'La Casa'];
 
   var IMG = 'assets/images/';
 
@@ -80,119 +75,144 @@
         'Elaborado por Hoang con más de 6 horas de cocción y más de 30 ingredientes seleccionados. Un caldo profundo y auténtico, la razón por la que muchos dicen que servimos el mejor Phở de España.',
         'In Vietnamese food we trust.'
       ] });
-    list({ anchor: 'rolls', eyebrow: '01 · Para empezar', title: 'Rollitos', vn: 'Cuốn & Chiên', items: [
-      { n: 'Nem Rán Hà Nội', en: 'Fried roll Hanoi', p: '8,50 €', img: IMG + 't-roll-fried.png', d: 'Cerdo o judía mungo · bánh tráng, fideos, verduras' },
-      { n: 'Chả Giò', en: 'Crispy spring rolls', p: '8,50 €', img: IMG + 't-roll-fried2.png', d: 'Cerdo o vegano (mungo) · nước chấm' },
-      { n: 'Gỏi Cuốn', en: 'Fresh roll', p: '7,90 €', t: ['GF'], img: IMG + 't-roll-fresh.png', d: 'Cerdo & gamba · mango & gamba · tofu · tofu & mango' }
+
+    /* ===== MÓN KHAI VỊ · SIDE DISH ===== */
+    list({ anchor: 'entrantes', eyebrow: 'Món khai vị · Side dish', title: 'Rollitos', vn: 'Cuốn & Gỏi', items: [
+      { n: 'Nem Rán Hà Nội', en: 'Fried roll Hanoi', p: '8,50 €', img: IMG + 't-roll-fried.png', d: 'Cerdo, judía mungo, champiñón, fideos de cristal' },
+      { n: 'Chả Giò', en: 'Fried rolls', p: '8,50 €', img: IMG + 't-roll-fried2.png', d: 'Cerdo · judía mungo (vegano)' },
+      { n: 'Gỏi Cuốn', en: 'Fresh roll', p: '7,90 €', t: ['GF'], img: IMG + 't-roll-fresh.png', d: 'Cerdo & gamba · mango & gamba · tofu (vegano) · tofu & mango (vegano)' },
+      { n: 'Gỏi Đu Đủ', en: 'Vietnamese papaya salad', p: '9,50 €', d: 'Cerdo & gamba · mango & gamba · pollo · tofu (vegano)' }
     ]});
-    list({ anchor: 'salads', img: IMG + 'hero-salads.png', eyebrow: '02 · Ensaladas & picoteo', title: 'Para compartir', vn: 'Món ăn kèm', items: [
-      { n: 'Gỏi Đu Đủ', en: 'Green papaya salad', p: '9,50 €', d: 'Cerdo & gamba · mango & gamba · pollo · tofu (vegano)' },
+    list({ img: IMG + 'hero-salads.png', eyebrow: 'Món khai vị · Para compartir', title: 'Para picar', vn: 'Món ăn kèm', items: [
       { n: 'Phồng Tôm', en: 'Shrimp puff', p: '4,50 €', d: 'Crackers de gamba fritos' },
       { n: 'Nem Chua Rán', en: 'Fried sour spring rolls', p: '8,50 €', d: 'Cerdo fermentado, pan rallado' },
-      { n: 'Chả Cá Cốm', en: 'Fish cake & green rice', p: '8,50 €' },
+      { n: 'Chả Cá Cốm', en: 'Fish cake & green rice', p: '8,50 €', d: 'Pasta de pescado, copos de arroz glutinoso verde' },
       { n: 'Rau Xào', en: 'Stir-fried vegetables', p: '7,90 €', t: ['V'], d: 'Verduras de temporada, salsa de ostras' },
-      { n: 'Cơm Cháy', en: 'Crispy rice', p: '8,50 €', d: 'Arroz crujiente, chà bông, aceite de cebolleta' }
+      { n: 'Cơm Cháy', en: 'Crispy rice', p: '8,50 €', d: 'Arroz seco, chà bông, aceite de cebolleta' }
     ]});
-    list({ anchor: 'grill', eyebrow: '03 · A la brasa', title: 'Grill', vn: 'Món nướng', items: [
+    list({ anchor: 'grill', eyebrow: 'Món khai vị · A la brasa', title: 'Grill', vn: 'Món nướng', items: [
       { n: 'Thịt Xiên Nướng', en: 'Grilled meat skewers', p: '9,50 €', img: IMG + 't-grill-skewers.png', d: 'Cerdo, citronela, ajo, miel, sésamo' },
-      { n: 'Thịt Bò Nướng', en: 'Grilled beef', p: '9,50 €', img: IMG + 't-grill-combo.png', d: 'Ternera, salsa de ostras, ajo, pimienta, citronela' },
+      { n: 'Thịt Bò Nướng', en: 'Grilled beef', p: '9,50 €', img: IMG + 't-grill-combo.png', d: 'Ternera, salsa de ostras, ajo, pimienta negra, citronela' },
       { n: 'Thịt Gà Nướng', en: 'Grilled chicken', p: '9,50 €', img: IMG + 't-grill-flame.png', d: 'Pollo, miel, ajo, soja, cinco especias' },
-      { n: 'Cánh Gà Chiên', en: 'Fried chicken wings', p: '8,50 €', img: IMG + 't-grill-wings.png', d: 'Alitas, nước mắm, ajo, miel' },
+      { n: 'Cánh Gà Chiên', en: 'Fried chicken wings', p: '8,50 €', img: IMG + 't-grill-wings.png', d: 'Alitas de pollo, nước mắm, ajo, miel' },
       { n: 'Bò Viên Chiên', en: 'Beef bouncy meatballs', p: '8,50 €', img: IMG + 't-grill-meatballs.png', d: 'Ternera picada, ajo, pimienta negra' }
     ]});
-    list({ anchor: 'pho', img: IMG + 'hero-pho.png', eyebrow: '04 · Sopa de fideos', title: 'Phở', vn: 'Phở', items: [
-      { n: 'What The Phở', en: 'Sharing pho · short rib', p: '39,00 €', d: 'Para compartir · costilla de ternera y tuétano' },
+
+    /* ===== MÓN CHÍNH · MAIN DISH ===== */
+    list({ anchor: 'pho', img: IMG + 'hero-pho.png', eyebrow: 'Món chính · Sopa de fideos', title: 'Phở', vn: 'Phở', items: [
+      { n: 'What The Phở', en: 'Special pho', p: '39,00 €', d: 'Phở đặc biệt · para compartir' },
       { n: 'Phở Bò', en: 'Beef', p: '16,90 €', d: 'Albóndiga de ternera casera +1,80 €' },
       { n: 'Phở Gà', en: 'Chicken', p: '14,90 €' },
       { n: 'Phở Heura', en: 'Heura (vegan)', p: '14,90 €', t: ['VG'] },
       { n: 'Phở Chay', en: 'Tofu & mushroom (vegan)', p: '14,90 €', t: ['VG'] }
     ]});
-    list({ anchor: 'bun', img: IMG + 'hero-bun.png', eyebrow: '05 · Bol de fideos', title: 'Bún', vn: 'Bún', items: [
-      { n: 'Bún Chả Hà Nội', en: 'Grilled pork & vermicelli', p: '16,90 €', d: 'Cerdo a la brasa, bún, hierbas, nước chấm' },
-      { n: 'Bún Bò Huế', en: 'Spicy beef noodle soup', p: '16,90 €', t: ['✦'], d: 'Ternera, chả casero, citronela, picante' }
+    list({ img: IMG + 'hero-bun.png', eyebrow: 'Món chính · Bol de fideos', title: 'Bún', vn: 'Bún', items: [
+      { n: 'Bún Chả Hà Nội', en: 'Grilled pork & vermicelli', p: '16,90 €', d: 'Cerdo a la brasa, fideos, hierbas, salsa para mojar' },
+      { n: 'Bún Bò Huế', en: 'Spicy beef noodle soup', p: '16,90 €', t: ['✦'], d: 'Ternera, salchicha de cerdo casera, citronela, caldo picante' }
     ]});
-    list({ anchor: 'banhxeo', img: IMG + 'hero-banhxeo.png', eyebrow: '06 · Crep vietnamita', title: 'Bánh Xèo', vn: 'Vietnamese pancake', note: 'Con papel de arroz para enrollar · +2,00 €', items: [
+    list({ img: IMG + 'hero-banhxeo.png', eyebrow: 'Món chính · Crep vietnamita', title: 'Bánh Xèo', vn: 'Vietnamese pancake', note: 'Con papel de arroz para enrollar · +2,00 €', items: [
       { n: 'Bánh Xèo', en: 'Pork & shrimps', p: '16,90 €', d: 'Crep de arroz y cúrcuma, brotes, hierbas' },
       { n: 'Bánh Xèo Gà', en: 'Chicken', p: '16,90 €' },
-      { n: 'Bánh Xèo Bò', en: 'Beef (new)', p: '16,90 €' },
+      { n: 'Bánh Xèo Bò', en: 'Beef', p: '16,90 €' },
       { n: 'Bánh Xèo Chay', en: 'Tofu & mushroom (vegan)', p: '16,90 €', t: ['VG'] }
     ]});
-    list({ anchor: 'wok', img: IMG + 'hero-wok.png', eyebrow: '07 · Salteado al wok', title: 'Wok Noodles', vn: 'Phở Xào', items: [
+    list({ anchor: 'salteados', img: IMG + 'hero-wok.png', eyebrow: 'Món chính · Salteado al wok', title: 'Wok Noodles', vn: 'Phở Xào', items: [
       { n: 'Phở Xào Bò', en: 'Beef', p: '14,90 €', d: 'Fideos salteados, ajo, cebolla, soja, ostras, cacahuete' },
       { n: 'Phở Xào Tôm', en: 'Shrimps', p: '14,50 €' },
       { n: 'Phở Xào Gà', en: 'Chicken', p: '14,50 €' },
       { n: 'Phở Xào Đậu', en: 'Tofu (vegan)', p: '14,50 €', t: ['VG'] },
       { n: 'Phở Xào Heura', en: 'Heura (vegan)', p: '14,90 €', t: ['VG'] }
     ]});
-    list({ anchor: 'noodlesalad', img: IMG + 'flatlay-curry.jpg', eyebrow: '08 · Bún trộn', title: 'Noodle Salad', vn: 'Bún Bò', items: [
+    list({ img: IMG + 'flatlay-curry.jpg', eyebrow: 'Món chính · Bún trộn', title: 'Noodle Salad', vn: 'Bún Bò', items: [
       { n: 'Bún Bò', en: 'Beef', p: '14,50 €', d: 'Fideos, lechuga, pepino, zanahoria, hierbas, cacahuete, nước mắm' },
       { n: 'Bún Đậu', en: 'Tofu (vegan)', p: '14,50 €', t: ['VG'] },
       { n: 'Bún Heura', en: 'Heura (vegan)', p: '14,50 €', t: ['VG'] }
     ]});
-    list({ anchor: 'curry', eyebrow: '09 · Al coco', title: 'Curry', vn: 'Cà Ri · con arroz', items: [
+    list({ anchor: 'curry', eyebrow: 'Món chính · Al coco', title: 'Curry', vn: 'Cà Ri · con arroz', items: [
       { n: 'Cà Ri Tôm', en: 'Shrimps', p: '14,50 €', img: IMG + 't-curry-shrimp.png', d: 'Leche de coco, patata, pasta de curry, especias' },
       { n: 'Cà Ri Gà', en: 'Chicken', p: '14,50 €', img: IMG + 't-curry-chicken.png' },
       { n: 'Cà Ri Đậu', en: 'Tofu (vegan)', p: '14,50 €', t: ['VG'], img: IMG + 't-curry-tofu.png' },
       { n: 'Cà Ri Heura', en: 'Heura (vegan)', p: '14,50 €', t: ['VG'], img: IMG + 't-curry-heura.png' }
     ]});
-    list({ anchor: 'tamarind', img: IMG + 'cover-spread.png', eyebrow: '10 · Agridulce', title: 'Tamarind Dream', vn: 'Me Xào · con arroz', note: 'Bold, tangy, unforgettable!', items: [
+    list({ eyebrow: 'Món chính · Agridulce', title: 'Tamarind Dream', vn: 'Me Xào · con arroz', note: 'Bold, tangy, unforgettable!', items: [
       { n: 'Me Xào Tôm', en: 'Shrimps', p: '14,50 €', img: IMG + 't-tam-shrimp.png', d: 'Arroz, salsa de tamarindo, hierbas, especias' },
       { n: 'Me Xào Bò', en: 'Beef', p: '14,50 €', img: IMG + 't-tam-beef.png' },
       { n: 'Me Xào Đậu', en: 'Tofu (vegan)', p: '14,50 €', t: ['VG'], img: IMG + 't-tam-tofu.png' },
       { n: 'Me Xào Heura', en: 'Heura (vegan)', p: '14,50 €', t: ['VG'], img: IMG + 't-tam-heura.png' }
     ]});
-    list({ anchor: 'rice', img: IMG + 'cover-spread.png', eyebrow: '11 · Con arroz', title: 'Platos de Arroz', vn: 'Món chính', items: [
-      { n: 'Cá Sốt Cà', en: 'Hake in red sauce', p: '14,50 €', img: IMG + 't-rice-hake.png', d: 'Merluza, tomate, cebolla, ajo, nước mắm' },
-      { n: 'Sườn Ram Mặn', en: 'Caramelized pork ribs', p: '14,50 €', img: IMG + 't-rice-ribs.png', d: 'Costilla, nước mắm, azúcar, ajo, pimienta, caramelo' },
-      { n: 'Gà Kho Sả', en: 'Chicken lemongrass', p: '14,50 €', img: IMG + 't-rice-chicken.png', d: 'Pollo, citronela, chili, ajo, cúrcuma' },
-      { n: 'Thịt Kho Tàu', en: 'Pork stew', p: '14,50 €', img: IMG + 't-rice-stew.png', d: 'Panceta, huevo cocido, agua de coco, nước mắm' }
+    list({ anchor: 'arroz', eyebrow: 'Món chính · Con arroz', title: 'Platos de Arroz', vn: 'Cơm', items: [
+      { n: 'Cá Sốt Cà', en: 'Hake in red sauce', p: '14,50 €', img: IMG + 't-rice-hake.png', d: 'Filetes de merluza, salsa de tomate, arroz' },
+      { n: 'Sườn Ram Mặn', en: 'Caramelized pork ribs', p: '14,50 €', img: IMG + 't-rice-ribs.png', d: 'Costillas de cerdo, salsa de caramelo, arroz' },
+      { n: 'Gà Kho Sả', en: 'Chicken lemongrass', p: '14,50 €', img: IMG + 't-rice-chicken.png', d: 'Pollo, citronela, chili, arroz' },
+      { n: 'Thịt Kho Tàu', en: 'Pork stew', p: '14,50 €', img: IMG + 't-rice-stew.png', d: 'Panceta, huevo cocido, agua de coco, arroz' }
     ]});
-    list({ anchor: 'friedrice', img: IMG + 'hero-friedrice.png', eyebrow: '12 · Arroz frito', title: 'Fried Rice', vn: 'Cơm Rang', items: [
+    list({ img: IMG + 'hero-friedrice.png', eyebrow: 'Món chính · Arroz frito', title: 'Fried Rice', vn: 'Cơm Rang', items: [
       { n: 'Cơm Rang Bò', en: 'Beef', p: '13,90 €' },
       { n: 'Cơm Rang Gà', en: 'Chicken', p: '13,90 €' },
       { n: 'Cơm Rang Tôm', en: 'Shrimp', p: '13,90 €' },
       { n: 'Cơm Trắng', en: 'Steamed rice', p: '3,50 €' }
     ]});
-    list({ anchor: 'tasting', img: IMG + 'hero-tasting.png', eyebrow: 'Mínimo 2 personas · por persona', title: 'Menús Degustación', vn: 'Thực đơn nếm thử', items: [
-      { n: 'Tasting Menu', en: '', p: '22,90 €', d: 'Chả giò · gỏi cuốn · ensalada de pollo · curry de pollo · phở de ternera' },
-      { n: 'Tasting Menu Vegan', en: '', p: '22,90 €', t: ['VG'], d: 'Rollitos · ensalada de tofu · curry vegano · phở vegano' },
-      { n: 'Deluxe Tasting', en: '', p: '29,90 €', d: '+ postre o café & bebidas incluidas' },
-      { n: 'Deluxe Vegan', en: '', p: '29,90 €', t: ['VG'], d: '+ postre & bebidas incluidas' }
-    ]});
-    list({ anchor: 'desserts', img: IMG + 'hero-desserts.png', eyebrow: '13 · Dulces', title: 'Postres', vn: 'Món tráng miệng', items: [
+
+    /* ===== MÓN TRÁNG MIỆNG · DESSERT ===== */
+    list({ anchor: 'postres', img: IMG + 'hero-desserts.png', eyebrow: 'Món tráng miệng · Dessert', title: 'Postres', vn: 'Món tráng miệng', items: [
       { n: 'Kem Lá Dứa', en: "Viet Kitchen's special", p: '5,90 €', d: 'Helado de pandan' },
       { n: 'Tropical Panna Cotta', en: '', p: '4,90 €' },
-      { n: 'Sữa Chua Nếp Cẩm', en: 'Yogurt & black rice', p: '5,90 €' },
-      { n: 'Chè Khúc Bạch', en: 'Almond panna cotta', p: '6,90 €' },
-      { n: 'Chè Chuối', en: 'Banana pudding', p: '5,90 €', t: ['VG'] },
+      { n: 'Sữa Chua Nếp Cẩm', en: 'Yogurt & black rice pudding', p: '5,90 €' },
+      { n: 'Chè Khúc Bạch', en: 'Vietnamese almond panna cotta', p: '6,90 €' },
+      { n: 'Chè Chuối', en: 'Banana pudding', p: '5,90 €' },
       { n: 'Sô Cô La Brownie', en: 'Chocolate brownie', p: '5,90 €' }
     ]});
-    list({ anchor: 'drinks', img: IMG + 'hero-drinks.png', eyebrow: '14 · Pha chế', title: 'Bebidas de la Casa', vn: 'Đồ uống pha chế', items: [
+
+    /* ===== ĐỒ UỐNG · DRINKS ===== */
+    list({ anchor: 'bebidas', img: IMG + 'hero-drinks.png', eyebrow: 'Đồ uống · Homemade', title: 'Bebidas de la Casa', vn: 'Pha chế', items: [
       { n: 'Trà Đá Sả', en: 'Lemongrass iced tea', p: '5,90 €' },
-      { n: 'Mint Pineapple Lemonade', en: '', p: '5,90 €' },
-      { n: 'Lemonade with Ginger', en: '', p: '5,90 €' },
-      { n: 'Ginger Beer Lemonade', en: 'sin alcohol', p: '5,90 €' },
+      { n: 'Nước Chanh Dứa Bạc Hà', en: 'Mint pineapple lemonade', p: '5,90 €' },
+      { n: 'Nước Chanh Gừng', en: 'Lemonade with ginger', p: '5,90 €' },
+      { n: 'Bia Gừng Chanh', en: 'Ginger beer lemonade', p: '5,90 €', d: 'Sin alcohol' },
       { n: 'Cà Phê Đá', en: 'Vietnamese iced coffee', p: '5,90 €', d: 'Con leche condensada' },
       { n: 'Cà Phê Trứng', en: 'Egg coffee', p: '7,90 €' }
     ]});
-    list({ anchor: 'tea', eyebrow: 'Té & café', title: 'Tea & Coffee', vn: 'Trà & Cà Phê', items: [
-      { n: 'Bình Trà', en: 'Teapot · Olong / Jasmine / Pu-erh', p: '7,90 €', d: 'Para 2-4 personas' },
-      { n: 'Tés sueltos', en: 'Jasmine · green · ginger · camomile · chai · mint', p: '3,50 €' },
+    list({ eyebrow: 'Đồ uống · Té', title: 'Tea', vn: 'Trà', items: [
+      { n: 'Bình Trà', en: 'Teapot', p: '7,90 €', d: 'Oolong / Jasmine / Pu-erh · para 2-4 personas' },
+      { n: 'Jasmine Tea', en: '', p: '3,50 €' },
+      { n: 'Green Tea', en: '', p: '3,50 €' },
+      { n: 'Fresh Ginger Tea', en: '', p: '3,50 €' },
+      { n: 'Camomile Tea', en: '', p: '3,50 €' },
+      { n: 'Chai Tea', en: '', p: '3,50 €' },
+      { n: 'Fresh Mint Tea', en: '', p: '3,50 €' }
+    ]});
+    list({ eyebrow: 'Đồ uống · Café', title: 'Coffee', vn: 'Cà Phê', items: [
       { n: 'Cà Phê Sữa', en: 'Coffee with milk', p: '2,90 €' },
       { n: 'Espresso', en: '', p: '1,90 €' },
-      { n: 'Cortado', en: '+ leche de coco 0,60 €', p: '2,50 €' },
+      { n: 'Cortado', en: '', p: '2,50 €', d: '+ leche de coco 0,60 €' },
       { n: 'Americano', en: '', p: '2,90 €' }
     ]});
-    list({ anchor: 'beers', eyebrow: 'Cervezas & refrescos', title: 'Beers & Soft Drinks', vn: 'Bia & Nước ngọt', items: [
-      { n: 'Bia Sài Gòn', en: 'Vietnamese Saigon beer', p: '4,50 €' },
-      { n: 'Moritz', en: 'cañita 2,90 · caña / 0% / epidor / clara', p: '3,50 €' },
-      { n: 'Bia không Gluten', en: 'Gluten free beer', p: '3,50 €' },
+    list({ eyebrow: 'Đồ uống · Refrescos', title: 'Soft Drinks', vn: 'Nước ngọt', items: [
       { n: 'Coca-Cola / Zero / Fanta / Sprite / Nestea', en: '', p: '2,90 €' },
       { n: 'Tonic Water', en: '', p: '3,30 €' },
       { n: 'Ginger Beer', en: '', p: '3,30 €' },
       { n: 'Sparkling Water', en: '', p: '2,90 €' },
       { n: 'Still Mineral Water', en: '', p: '2,50 €' }
     ]});
+    list({ eyebrow: 'Đồ uống · Cervezas', title: 'Beers', vn: 'Bia', items: [
+      { n: 'Bia Sài Gòn', en: 'Vietnamese Saigon beer', p: '4,50 €' },
+      { n: 'Moritz Cañita', en: '', p: '2,90 €' },
+      { n: 'Moritz Caña', en: '', p: '3,50 €' },
+      { n: 'Moritz 0%', en: 'sin alcohol', p: '3,50 €' },
+      { n: 'Moritz Epidor', en: '', p: '3,50 €' },
+      { n: 'Moritz Clara', en: '', p: '3,50 €' },
+      { n: 'Bia Không Gluten', en: 'Gluten free beer', p: '3,50 €' }
+    ]});
+
+    /* ===== THỰC ĐƠN NẾM THỬ · SET MENU ===== */
+    list({ anchor: 'menus', img: IMG + 'hero-tasting.png', eyebrow: 'Thực đơn nếm thử · Set menu', title: 'Menús Degustación', vn: 'Mín. 2 personas · por persona', items: [
+      { n: 'Tasting Menu', en: '', p: '22,90 €', d: 'Chả giò · gỏi cuốn · ensalada de pollo · curry de pollo · phở de ternera' },
+      { n: 'Tasting Menu Vegan', en: '', p: '22,90 €', t: ['VG'], d: 'Chả giò · gỏi cuốn · ensalada de tofu · curry vegano · phở vegano' },
+      { n: 'Deluxe Tasting Menu', en: '', p: '29,90 €', d: 'Rollitos · phở de ternera · ensalada y curry de pollo · postre o café · bebidas' },
+      { n: 'Deluxe Vegan Menu', en: '', p: '29,90 €', t: ['VG'], d: 'Rollitos · phở vegano · ensalada de tofu · curry vegano · postre · bebidas' }
+    ]});
+
+    /* ===== LA CASA ===== */
     story({ anchor: 'about', img: IMG + 'storefront.png', eyebrow: 'Nuestra historia', title: 'La Casa',
       paras: [
         'Un rincón cálido del Eixample donde se cocinan las recetas de familia: caldos a fuego lento, hierbas del mercado y el sabor honesto de la comida de calle de Hanoi y Huế.',
@@ -366,9 +386,16 @@
   }
 
   /* Footer counter + arrow disabled states. */
+  /* Footer label for a spread: the title of whichever page on it has one. */
+  function spreadLabel(i) {
+    var fp = pages[2 * i], bp = pages[2 * i + 1];
+    if (fp && fp.type === 'title') return 'La Carta';
+    return (fp && fp.title) || (bp && bp.title) || '';
+  }
+
   function updateChrome() {
     $('#spread-num').textContent = String(spread + 1).padStart(2, '0');
-    $('#spread-label').textContent = SPREAD_LABELS[spread] || '';
+    $('#spread-label').textContent = spreadLabel(spread);
     $('#spread-total').textContent = '/ ' + String(leafCount).padStart(2, '0');
     $('#prev').disabled = spread <= 0;
     $('#next').disabled = spread >= leafCount - 1;
