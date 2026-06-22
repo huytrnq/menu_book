@@ -15,10 +15,21 @@
 </head>
 <body>
 
+  <!-- Language switcher template (cloned into the cover + header by JS) -->
+  <template id="lang-switch-tpl">
+    <div class="lang-switch" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="vi">VI</button>
+    </div>
+  </template>
+
   <!-- ===================== COVER ===================== -->
   <section id="cover" class="cover" data-screen-label="Cover">
     <div class="cover-bg"></div>
     <div class="cover-veil"></div>
+
+    <div class="cover-lang"></div>
 
     <div class="cover-card">
       <span class="corner tl"></span><span class="corner tr"></span>
@@ -27,7 +38,7 @@
       <img class="cover-logo" src="assets/images/logo.jpg" alt="Viet Kitchen logo">
       <div class="eyebrow gold">Barcelona · Eixample</div>
       <h1 class="cover-title">Viet Kitchen</h1>
-      <p class="cover-tagline">Home of the secret Phở</p>
+      <p class="cover-tagline" data-i18n="tagline">Home of the secret Phở</p>
 
       <div class="cover-divider">
         <svg width="44" height="24" viewBox="0 0 44 24" fill="none" aria-hidden="true">
@@ -36,32 +47,32 @@
         </svg>
       </div>
 
-      <button id="open-menu" class="btn-cta cover-btn" type="button">Abrir la carta&nbsp;→</button>
-      <div class="cover-phone">Reservas · 931 090 041</div>
+      <button id="open-menu" class="btn-cta cover-btn" type="button" data-i18n="openMenu">Abrir la carta&nbsp;→</button>
+      <div class="cover-phone" data-i18n="reservasPhone">Reservas · 931 090 041</div>
     </div>
 
     <div class="promos">
       <div class="promos-head">
         <span class="rule"></span>
-        <span class="promos-title">Promociones</span>
+        <span class="promos-title" data-i18n="promos">Promociones</span>
         <span class="rule"></span>
       </div>
       <div class="promo-row">
         <div class="promo promo-gold">
-          <span class="promo-flag">Oferta</span>
-          <div class="promo-kicker dark">Lun – Vie · mediodía</div>
-          <div class="promo-name dark">Menú del día</div>
-          <div class="promo-price green">desde 11,90 €</div>
+          <span class="promo-flag" data-i18n="oferta">Oferta</span>
+          <div class="promo-kicker dark" data-i18n="promoLunchKicker">Lun – Vie · mediodía</div>
+          <div class="promo-name dark" data-i18n="promoLunchName">Menú del día</div>
+          <div class="promo-price green" data-i18n="promoLunchPrice">desde 11,90 €</div>
         </div>
         <div class="promo promo-cream">
-          <div class="promo-kicker">Para llevar</div>
-          <div class="promo-name">Lunch Box</div>
+          <div class="promo-kicker" data-i18n="promoBoxKicker">Para llevar</div>
+          <div class="promo-name" data-i18n="promoBoxName">Lunch Box</div>
           <div class="promo-price">11,00 €</div>
         </div>
         <div class="promo promo-cream">
-          <div class="promo-kicker">Min. 2 personas</div>
-          <div class="promo-name">Menú degustación</div>
-          <div class="promo-price">22,90 € / persona</div>
+          <div class="promo-kicker" data-i18n="promoTastingKicker">Min. 2 personas</div>
+          <div class="promo-name" data-i18n="promoTastingName">Menú degustación</div>
+          <div class="promo-price" data-i18n="promoTastingPrice">22,90 € / persona</div>
         </div>
       </div>
     </div>
@@ -75,7 +86,10 @@
         <span>Viet Kitchen</span>
       </button>
       <nav id="nav" class="nav" aria-label="Categorías de la carta"><!-- nav buttons injected by JS --></nav>
-      <button class="btn-reserve-outline open-res" type="button">Reservar</button>
+      <div class="topbar-right">
+        <div class="header-lang"></div>
+        <button class="btn-reserve-outline open-res" type="button" data-i18n="reserve">Reservar</button>
+      </div>
     </header>
 
     <div id="vk-scroll" class="stage">
@@ -96,7 +110,7 @@
       <span id="spread-total" class="bookbar-total"></span>
     </footer>
 
-    <button class="btn-cta sticky-res open-res" type="button">Reservar mesa</button>
+    <button class="btn-cta sticky-res open-res" type="button" data-i18n="reserveTable">Reservar mesa</button>
   </section>
 
   <!-- ===================== RESERVATION MODAL ===================== -->
@@ -107,48 +121,48 @@
       <!-- Step 1: form -->
       <div id="res-form-step">
         <div class="modal-head">
-          <div class="eyebrow gold">Reservas · Viet Kitchen</div>
-          <h3 id="res-heading">Reserva tu mesa</h3>
+          <div class="eyebrow gold" data-i18n="resEyebrow">Reservas · Viet Kitchen</div>
+          <h3 id="res-heading" data-i18n="resHeading">Reserva tu mesa</h3>
         </div>
         <form id="res-form" class="modal-body" novalidate>
-          <label for="res-date">Fecha</label>
+          <label for="res-date" data-i18n="fecha">Fecha</label>
           <input id="res-date" name="date" type="date" required>
 
-          <label>Hora</label>
+          <label data-i18n="hora">Hora</label>
           <div id="time-chips" class="time-chips"><!-- chips injected by JS --></div>
 
-          <label>Comensales</label>
+          <label data-i18n="comensales">Comensales</label>
           <div class="party">
-            <button id="party-dec" class="party-btn" type="button" aria-label="Menos comensales">−</button>
+            <button id="party-dec" class="party-btn" type="button" aria-label="−">−</button>
             <span id="party-count" class="party-count">2</span>
-            <button id="party-inc" class="party-btn" type="button" aria-label="Más comensales">+</button>
-            <span class="party-label">personas</span>
+            <button id="party-inc" class="party-btn" type="button" aria-label="+">+</button>
+            <span class="party-label" data-i18n="personas">personas</span>
           </div>
 
-          <input id="res-name" name="name" type="text" placeholder="Nombre" required>
+          <input id="res-name" name="name" type="text" data-i18n-ph="phName" placeholder="Nombre" required>
           <div class="field-row">
-            <input id="res-phone" name="phone" type="tel" placeholder="Teléfono">
-            <input id="res-email" name="email" type="email" placeholder="Email">
+            <input id="res-phone" name="phone" type="tel" data-i18n-ph="phPhone" placeholder="Teléfono">
+            <input id="res-email" name="email" type="email" data-i18n-ph="phEmail" placeholder="Email">
           </div>
-          <textarea id="res-notes" name="notes" rows="2" placeholder="Peticiones especiales"></textarea>
+          <textarea id="res-notes" name="notes" rows="2" data-i18n-ph="phNotes" placeholder="Peticiones especiales"></textarea>
 
-          <button id="res-submit" class="btn-cta submit-btn" type="submit" disabled>Reservar una mesa</button>
-          <p class="modal-hint">Indica fecha, hora y nombre para confirmar.</p>
+          <button id="res-submit" class="btn-cta submit-btn" type="submit" data-i18n="submit" disabled>Reservar una mesa</button>
+          <p class="modal-hint" data-i18n="resHint">Indica fecha, hora y nombre para confirmar.</p>
         </form>
       </div>
 
       <!-- Step 2: confirmation -->
       <div id="res-done-step" class="modal-done" hidden>
         <div class="done-check"><span>✓</span></div>
-        <div class="eyebrow terra">Reserva recibida</div>
-        <h3 class="done-title">Gracias, <span id="done-name"></span></h3>
-        <p class="done-text">Te esperamos en Viet Kitchen. Te enviaremos la confirmación por mensaje.</p>
+        <div class="eyebrow terra" data-i18n="doneEyebrow">Reserva recibida</div>
+        <h3 class="done-title"><span id="done-thanks">Gracias</span>, <span id="done-name"></span></h3>
+        <p class="done-text" data-i18n="doneText">Te esperamos en Viet Kitchen. Te enviaremos la confirmación por mensaje.</p>
         <div class="done-summary">
-          <div><span>Fecha</span><strong id="done-date"></strong></div>
-          <div><span>Hora</span><strong id="done-time"></strong></div>
-          <div><span>Comensales</span><strong id="done-party"></strong></div>
+          <div><span data-i18n="fecha">Fecha</span><strong id="done-date"></strong></div>
+          <div><span data-i18n="hora">Hora</span><strong id="done-time"></strong></div>
+          <div><span data-i18n="comensales">Comensales</span><strong id="done-party"></strong></div>
         </div>
-        <button class="done-back close-res" type="button">Volver a la carta</button>
+        <button class="done-back close-res" type="button" data-i18n="doneBack">Volver a la carta</button>
       </div>
     </div>
   </div>
