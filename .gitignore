@@ -4,3 +4,7 @@ _original/
 # Large source images for the break pages — only the optimized
 # assets/images/break/*.jpg are committed and used by the site.
 assets/breakpages/
+
+# Print-res page exports (5500px). The site serves the optimized
+# assets/images/pages/*.jpg instead.
+assets/images/menu-source-*.png
