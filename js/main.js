@@ -79,15 +79,11 @@
 
   /* --- Top navigation: label -> section anchor --- */
   var NAV = [
-    { id: 'entrantes', label: T('Entrantes', 'Starters', 'Khai vị') },
-    { id: 'grill',     label: T('Grill', 'Grill', 'Nướng') },
-    { id: 'pho',       label: T('Phở', 'Phở', 'Phở') },
-    { id: 'salteados', label: T('Salteados', 'Stir-fried', 'Xào') },
-    { id: 'curry',     label: T('Curry', 'Curry', 'Cà Ri') },
-    { id: 'arroz',     label: T('Arroz', 'Rice', 'Cơm') },
-    { id: 'menus',     label: T('Menús', 'Set menus', 'Thực đơn') },
-    { id: 'postres',   label: T('Postres', 'Desserts', 'Tráng miệng') },
-    { id: 'bebidas',   label: T('Bebidas', 'Drinks', 'Đồ uống') }
+    { id: 'menus',       label: T('Menús', 'Set menus', 'Thực đơn') },
+    { id: 'entrantes',   label: T('Entrantes', 'Starters', 'Khai vị') },
+    { id: 'principales', label: T('Principales', 'Main course', 'Món chính') },
+    { id: 'postres',     label: T('Postres', 'Desserts', 'Tráng miệng') },
+    { id: 'bebidas',     label: T('Bebidas', 'Drinks', 'Đồ uống') }
   ];
 
   /* ----------------------------------------------------------
@@ -103,17 +99,17 @@
     var PAGE_DEFS = [
       { label: 'Portada' },                          //  1 cover
       { label: 'Vietnam' },                          //  2 Tinh hoa - map of Vietnam
-      { anchor: 'menus', label: 'Menús' },           //  3 Menú Degustación Deluxe / Vegano
-      { anchor: 'entrantes', label: 'Entrantes' },   //  4 Starters 1-4 (rolls, papaya salad)
-      { anchor: 'grill', label: 'Entrantes' },       //  5 Starters 5-7 (pancake, BBQ pork, BBQ chicken)
-      { label: 'Entrantes' },                        //  6 Starters 8-10 (eggplant, fish cake, skewers)
-      { label: 'Entrantes' },                        //  7 Starters 11-13 (wings, meatballs, betel beef)
-      { anchor: 'pho', label: 'Phở' },               //  8 Mains - Phở & rice noodle soups 14-15
-      { anchor: 'salteados', label: 'Principales' }, //  9 Mains - wok noodles / noodle salad 16-19
-      { anchor: 'curry', label: 'Curry' },           // 10 Mains - rice: curry & tamarind 20-21
-      { anchor: 'arroz', label: 'Arroz' },           // 11 Mains - rice: lemongrass, stew, veg 22-24
-      { anchor: 'postres', label: 'Postres' },       // 12 Desserts 25-29
-      { anchor: 'bebidas', label: 'Bebidas' },       // 13 Drinks - homemade + coffee 30-39
+      { anchor: 'menus', label: 'Menús' },             //  3 Menú Degustación Deluxe / Vegano
+      { anchor: 'entrantes', label: 'Entrantes' },     //  4 Starters 1-4 (rolls, papaya salad)
+      { label: 'Entrantes' },                          //  5 Starters 5-7 (pancake, BBQ pork, BBQ chicken)
+      { label: 'Entrantes' },                          //  6 Starters 8-10 (eggplant, fish cake, skewers)
+      { label: 'Entrantes' },                          //  7 Starters 11-13 (wings, meatballs, betel beef)
+      { anchor: 'principales', label: 'Principales' }, //  8 Mains - Phở & rice noodle soups 14-15
+      { label: 'Principales' },                        //  9 Mains - wok noodles / noodle salad 16-19
+      { label: 'Curry' },                              // 10 Mains - rice: curry & tamarind 20-21
+      { label: 'Arroz' },                              // 11 Mains - rice: lemongrass, stew, veg 22-24
+      { anchor: 'postres', label: 'Postres' },         // 12 Desserts 25-29
+      { anchor: 'bebidas', label: 'Bebidas' },         // 13 Drinks - homemade + coffee 30-39
       { label: 'Bebidas' },                          // 14 Drinks - soft drinks + beers 40-44
       { label: 'Vinos' },                            // 15 Drinks - wine 45-50
       { label: 'Gracias' }                           // 16 thank you
