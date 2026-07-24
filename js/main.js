@@ -102,37 +102,21 @@
        and a label used by the footer page counter. */
     var PAGE_DEFS = [
       { label: 'Portada' },                          //  1 cover
-      { anchor: 'entrantes', label: 'Entrantes' },   //  2 Fresh Roll
-      { label: 'Entrantes' },                        //  3 rolls
-      { label: 'Entrantes' },                        //  4 Salad & Side Dish
-      { label: 'Entrantes' },                        //  5 papaya salad / sides
-      { anchor: 'grill', label: 'Grill' },           //  6 Grill divider
-      { label: 'Grill' },                            //  7 grill items
-      { anchor: 'pho', label: 'Pho' },               //  8 What The Pho
-      { label: 'Pho' },                              //  9 secret pho + pho
-      { label: 'Bun' },                              // 10 Bun Cha / Bun Bo Hue
-      { label: 'Bun' },                              // 11 bun items
-      { label: 'Banh Xeo' },                         // 12 Vietnamese pancake
-      { anchor: 'salteados', label: 'Salteados' },   // 13 Wok Noodles divider
-      { label: 'Salteados' },                        // 14 wok items
-      { label: 'Ensalada de fideos' },               // 15 noodle salad
-      { anchor: 'curry', label: 'Curry' },           // 16 Curry & Tamarind
-      { label: 'Curry' },                            // 17 curry items
-      { label: 'Tamarindo' },                        // 18 tamarind items
-      { anchor: 'arroz', label: 'Arroz' },           // 19 Vietnamese Taste
-      { label: 'Arroz' },                            // 20 rice dishes
-      { label: 'Arroz frito' },                      // 21 fried rice
-      { anchor: 'menus', label: 'Menus' },           // 22 tasting menus
-      { label: 'Menus' },                            // 23 deluxe menus
-      { anchor: 'postres', label: 'Postres' },       // 24 Desserts divider
-      { label: 'Postres' },                          // 25 dessert items
-      { anchor: 'bebidas', label: 'Bebidas' },       // 26 homemade drinks
-      { label: 'Bebidas' },                          // 27 drinks divider
-      { label: 'Te' },                               // 28 tea
-      { label: 'Cafe' },                             // 29 coffee
-      { label: 'Refrescos' },                        // 30 soft drinks
-      { label: 'Cervezas' },                         // 31 beers
-      { label: 'Gracias' }                           // 32 thank you
+      { label: 'Vietnam' },                          //  2 Tinh hoa - map of Vietnam
+      { anchor: 'menus', label: 'Menús' },           //  3 Menú Degustación Deluxe / Vegano
+      { anchor: 'entrantes', label: 'Entrantes' },   //  4 Starters 1-4 (rolls, papaya salad)
+      { anchor: 'grill', label: 'Entrantes' },       //  5 Starters 5-7 (pancake, BBQ pork, BBQ chicken)
+      { label: 'Entrantes' },                        //  6 Starters 8-10 (eggplant, fish cake, skewers)
+      { label: 'Entrantes' },                        //  7 Starters 11-13 (wings, meatballs, betel beef)
+      { anchor: 'pho', label: 'Phở' },               //  8 Mains - Phở & rice noodle soups 14-15
+      { anchor: 'salteados', label: 'Principales' }, //  9 Mains - wok noodles / noodle salad 16-19
+      { anchor: 'curry', label: 'Curry' },           // 10 Mains - rice: curry & tamarind 20-21
+      { anchor: 'arroz', label: 'Arroz' },           // 11 Mains - rice: lemongrass, stew, veg 22-24
+      { anchor: 'postres', label: 'Postres' },       // 12 Desserts 25-29
+      { anchor: 'bebidas', label: 'Bebidas' },       // 13 Drinks - homemade + coffee 30-39
+      { label: 'Bebidas' },                          // 14 Drinks - soft drinks + beers 40-44
+      { label: 'Vinos' },                            // 15 Drinks - wine 45-50
+      { label: 'Gracias' }                           // 16 thank you
     ];
     return PAGE_DEFS.map(function (d, i) {
       var n = (i + 1 < 10 ? '0' : '') + (i + 1);
